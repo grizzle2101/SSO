@@ -1,15 +1,17 @@
 import express from "express";
+import {connectToMongoDB} from './startup/db';
 
 const app = express();
-const port = 8080; // default port to listen
+const port = process.env.PORT || 3000;
 
-// define a route handler for the default home page
+connectToMongoDB();
+
+
 app.get("/", (req, res) => {
   res.send("Hello world 121!");
 });
 
-// start the Express server
+
 app.listen(port, () => {
-  // tslint:disable-next-line:no-console
-  console.log(`server started at http://localhost:${port}`);
+  console.log(`Listening on port ${port}...`)
 });
