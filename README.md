@@ -1,4 +1,4 @@
-##SSO
+# SSO
 
 ___________
 Simple Sign On is a sign on provider built with Node.js, Typescript & MongoDB.
