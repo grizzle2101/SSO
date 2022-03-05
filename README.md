@@ -8,14 +8,15 @@ Requirements:
 -node 16
 -MongoDB
 
-Setup Notes:
-Step 1:
+## Setup Notes:
+
+### Step 1:
 Install nodemon & ts-node globally:
 ```console
     $ npm install -g nodemon ts-node
 ```
 
-Step 2:
+### Step 2:
 Create .env File:
 Create a .env file in the root directory, and copy this text into it.
 
