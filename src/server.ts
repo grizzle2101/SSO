@@ -1,8 +1,5 @@
 import App from "./app";
+import { UsersRoute } from "./routes/users.route";
 
-
-
-//TODO - setup routes
-//const app = new App([new IndexRoute(), new UsersRoute(), new AuthRoute()]);
-const app = new App([]);
+const app = new App([new UsersRoute()]);
 app.listen();
