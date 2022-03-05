@@ -9,7 +9,6 @@ Requirements:
 -MongoDB
 
 Setup Notes:
-_______________
 Step 1:
 Install nodemon & ts-node globally:
 ```console
