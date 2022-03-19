@@ -1,14 +1,11 @@
 import { Router } from "express";
+import { User } from "../interfaces/user.interface";
+import userModel from "../models/user.model";
 
 export class UsersRoute {
   public path = "/users";
   public router = Router();
-
-  public mockUser = {
-    username: "test",
-    password: "password",
-    email: "test@gmail.com",
-  };
+  public users = userModel;
 
   constructor() {
     this.initializeRoutes();
@@ -16,12 +13,13 @@ export class UsersRoute {
 
   private initializeRoutes() {
     this.router.get(this.path, async (req, res) => {
-      res.send(this.mockUser);
+      const users: User[] = await this.users.find();
+      res.send(users);
     });
 
     this.router.post(this.path, async (req, res) => {
-      console.log("body - ", req.body);
-      res.send(req.body);
+      const result = await this.users.create({ name: req.body.name });
+      res.send(result);
     });
   }
 }
