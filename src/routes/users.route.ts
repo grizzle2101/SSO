@@ -1,27 +1,55 @@
 import { Router } from "express";
+import { User } from "../interfaces/user.interface";
+import userModel from "../models/user.model";
 
 export class UsersRoute {
   public path = "/users";
   public router = Router();
-
-  public mockUser = {
-    username: "test",
-    password: "password",
-    email: "test@gmail.com",
-  };
+  public users = userModel;
 
   constructor() {
     this.initializeRoutes();
   }
 
   private initializeRoutes() {
-    this.router.get(this.path, async (req, res) => {
-      res.send(this.mockUser);
+    this.router.post(this.path, async (req, res) => {
+      const result = await this.users.create({
+        name: req.body.name,
+        email: req.body.email,
+      });
+      res.send(result);
     });
 
-    this.router.post(this.path, async (req, res) => {
-      console.log("body - ", req.body);
-      res.send(req.body);
+    this.router.get(`${this.path}/:id`, async (req, res) => {
+      const userId: string = req.params.id;
+      const user: User[] = await this.users.findById(userId);
+      res.send(user);
+    });
+
+    this.router.get(this.path, async (req, res) => {
+      const users: User[] = await this.users.find();
+      res.send(users);
+    });
+
+    this.router.put(`${this.path}/:id`, async (req, res) => {
+      const userId: string = req.params.id;
+
+      const user: User[] = await this.users.findByIdAndUpdate(
+        userId,
+        {
+          name: req.body.name,
+          email: req.body.email,
+        },
+        { new: true }
+      );
+
+      res.send(user);
+    });
+
+    this.router.delete(`${this.path}/:id`, async (req, res) => {
+      const userId: string = req.params.id;
+      const user: User[] = await this.users.findByIdAndDelete(userId);
+      res.send(user);
     });
   }
 }
