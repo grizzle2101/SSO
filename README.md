@@ -1,11 +1,13 @@
 # SSO
 
-Simple Sign On is a sign on provider built with Node.js, Typescript & MongoDB.
+Simple sign on is a self hosted, single sign on provider & user management interface built entirely in Typescript, using the MEAN Stack.
+(MongoDB, Express.js, Angular & Node.js).
+
 ___________
 
 
 Requirements:
--node 16
+-node 16 (or higher)
 -MongoDB
 
 ## Setup Notes
