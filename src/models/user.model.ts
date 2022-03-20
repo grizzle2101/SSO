@@ -7,18 +7,15 @@ const userSchema: Schema = new Schema({
     required: true,
     unique: false,
   },
-  /*
   email: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
   },
-  
   password: {
     type: String,
-    required: true,
+    required: false,
   },
-  */
 });
 
 const userModel = model<User & Document>("User", userSchema);
