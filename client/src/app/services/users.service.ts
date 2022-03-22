@@ -14,4 +14,22 @@ export class UsersService {
   getUsers(): Observable<any> {
     return this.http.get(this.url);
   }
+
+  addUser(user: any): Observable<any> {
+    return this.http.post(this.url, {
+      name: user.name,
+      email: user.email,
+    });
+  }
+
+  editUser(user: any): Observable<any> {
+    return this.http.put(`${this.url}/${user._id}`, {
+      name: 'edited',
+      email: 'edited',
+    });
+  }
+
+  deleteUser(id: string): Observable<any> {
+    return this.http.delete(`${this.url}/${id}`);
+  }
 }
