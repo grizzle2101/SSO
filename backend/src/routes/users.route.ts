@@ -3,7 +3,7 @@ import { User } from "../interfaces/user.interface";
 import userModel from "../models/user.model";
 
 export class UsersRoute {
-  public path = "/users";
+  public path = "/api/users";
   public router = Router();
   public users = userModel;
 
