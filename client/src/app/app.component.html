@@ -19,16 +19,12 @@
         <button mat-button (click)="deleteUser(user)">Delete</button>
       </mat-card-actions>
     </mat-card>
-  </div>
 
-  <div class="add-user-button">
-    <button
-      (click)="addUser()"
-      mat-fab
-      color="primary"
-      aria-label="Add User to List"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
+    <mat-card class="user-management-card">
+      <mat-card-actions>
+        <button mat-button (click)="addUser()"><mat-icon>add</mat-icon></button>
+        <div>Add User</div>
+      </mat-card-actions>
+    </mat-card>
   </div>
 </div>
