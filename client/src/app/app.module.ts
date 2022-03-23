@@ -13,9 +13,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { UserManagementPanelComponent } from './user-management-panel/user-management-panel.component';
 
 @NgModule({
-  declarations: [AppComponent, UserDialogComponent],
+  declarations: [AppComponent, UserDialogComponent, UserManagementPanelComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

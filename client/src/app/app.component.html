@@ -3,28 +3,4 @@
 </div>
 
 <mat-divider></mat-divider>
-<h2>User Management Panel</h2>
-<div class="user-management-panel">
-  <div>
-    <mat-card *ngFor="let user of users" class="user-management-card">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image">
-          <mat-icon>account_circle</mat-icon>
-        </div>
-        <mat-card-title> {{ user.name }}</mat-card-title>
-        <mat-card-subtitle> {{ user.email }} </mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-actions>
-        <button mat-button (click)="editUser(user)">Edit</button>
-        <button mat-button (click)="deleteUser(user)">Delete</button>
-      </mat-card-actions>
-    </mat-card>
-
-    <mat-card class="user-management-card">
-      <mat-card-actions>
-        <button mat-button (click)="addUser()"><mat-icon>add</mat-icon></button>
-        <div>Add User</div>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-</div>
+<app-user-management-panel></app-user-management-panel>
