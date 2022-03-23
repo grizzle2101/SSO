@@ -2,6 +2,7 @@ import express from "express";
 import { Routes } from "./interfaces/routes.interface";
 import dotenv from "dotenv";
 import { connectToMongoDB } from "./startup/db";
+import cors from "cors";
 
 class App {
   public app: express.Application;
@@ -35,6 +36,8 @@ class App {
   }
 
   private initializeMiddlewares() {
+    // enabling CORS for local development ONLY.
+    if (this.env !== "production") this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
   }
