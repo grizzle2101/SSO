@@ -11,6 +11,8 @@ Requirements:
 
 ## Setup Notes
 
+## Getting Node.js backend running:
+
 ### Step 1
 
 Install nodemon & ts-node globally:
@@ -28,4 +30,36 @@ Create a .env file in the root directory, and copy this text into it.
 NODE_ENV = development
 DB_URI = <db_connection_string>
 PORT = <default_port>
+```
+
+## Getting Angular App running:
+
+### Step 1
+
+Install Angular CLI globally
+
+```console
+    $ npm install -g @angular/cli
+```
+
+### Step 2
+
+Install dependencies
+
+```console
+    $ npm install
+```
+
+run application
+
+```console
+    $ ng serve
+```
+
+**Note:**
+Make sure the backend .env file and frontend environments.ts match e.g.
+
+```
+PORT = 3000
+apiEndpoint: 'http://localhost:3000/api'
 ```
