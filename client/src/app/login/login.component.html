@@ -10,16 +10,20 @@
       </div>
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" />
+        <input matInput placeholder="Email" [(ngModel)]="userLogin.email" />
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
-        <input matInput placeholder="Password" />
+        <input
+          matInput
+          placeholder="Password"
+          [(ngModel)]="userLogin.password"
+        />
       </mat-form-field>
     </div>
     <div class="centered">
       <button mat-button>Cancel</button>
-      <button mat-button>Login</button>
+      <button mat-button (click)="login()">Login</button>
     </div>
   </div>
 </div>

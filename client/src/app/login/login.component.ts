@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Login, LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
+  public userLogin: Login = { email: '', password: '' };
 
-  constructor() { }
+  constructor(private loginService: LoginService, private router: Router) {}
 
-  ngOnInit(): void {
+  login() {
+    this.loginService.login(this.userLogin).subscribe((token) => {
+      console.log('token - ', token);
+
+      //todo - navigate externally to redirect URI.
+    });
   }
-
 }
