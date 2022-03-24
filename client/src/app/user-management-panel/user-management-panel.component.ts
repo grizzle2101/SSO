@@ -39,6 +39,13 @@ export class UserManagementPanelComponent {
     });
   }
 
+  resetPassword(user: any) {
+    user.password = '';
+    this.usersServive.editUser(user).subscribe((editedUser) => {
+      user.password = editedUser.password;
+    });
+  }
+
   deleteUser(user: any) {
     this.usersServive.deleteUser(user._id).subscribe((deletedUser) => {
       this.users = this.users.filter((user) => user._id !== deletedUser._id);
