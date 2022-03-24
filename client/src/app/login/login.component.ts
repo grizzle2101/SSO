@@ -13,10 +13,11 @@ export class LoginComponent {
   constructor(private loginService: LoginService, private router: Router) {}
 
   login() {
-    this.loginService.login(this.userLogin).subscribe((token) => {
-      console.log('token - ', token);
-
-      //todo - navigate externally to redirect URI.
+    this.loginService.login(this.userLogin).subscribe((result) => {
+      const token = result.token;
+      this.router.navigate(['redirect'], {
+        queryParams: { token },
+      });
     });
   }
 }
