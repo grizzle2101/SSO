@@ -15,7 +15,7 @@ export class UsersRoute {
     this.router.post(this.path, async (req, res) => {
       const result = await this.users.create({
         name: req.body.name,
-        email: req.body.email,
+        email: req.body.email.toLowerCase(),
       });
       res.send(result);
     });
@@ -38,7 +38,7 @@ export class UsersRoute {
         userId,
         {
           name: req.body.name,
-          email: req.body.email,
+          email: req.body.email.toLowerCase(),
           password: req.body.password,
         },
         { new: true }
