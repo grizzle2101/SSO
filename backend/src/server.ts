@@ -1,5 +1,8 @@
 import App from "./app";
 import { UsersRoute } from "./routes/users.route";
+import { LoginRoute } from "./routes/login.route";
+import dotenv from "dotenv";
 
-const app = new App([new UsersRoute()]);
+dotenv.config();
+const app = new App([new UsersRoute(), new LoginRoute()]);
 app.listen();
