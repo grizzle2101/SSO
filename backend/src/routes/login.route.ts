@@ -18,11 +18,11 @@ export class LoginRoute {
         email: req.body.email,
       });
 
-      if (!user) return res.status(400).send("Failed to Authenticate");
+      if (!user) return res.status(404).send("Could not Find user.");
 
       const token = jwt.sign({ user }, this.privateKey);
 
-      res.status(200).send(token);
+      res.send({ token });
     });
   }
 }
