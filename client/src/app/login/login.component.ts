@@ -8,6 +8,7 @@ import { RoutingService } from '../services/routing.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  isManagementLogin: boolean = false;
   public userLogin: Login = { email: '', password: '' };
 
   constructor(
@@ -15,11 +16,19 @@ export class LoginComponent implements OnInit {
     private routingService: RoutingService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isManagementLogin = this.routingService.isManagementLogin();
+  }
 
   login() {
-    this.loginService.login(this.userLogin).subscribe((result) => {
-      this.routingService.navigateToRedirectPage(result.token);
-    });
+    //todo - create seperate process for admin/management users.
+    if (this.isManagementLogin)
+      this.loginService.login(this.userLogin).subscribe((result) => {
+        this.routingService.navigateToHome();
+      });
+    else
+      this.loginService.login(this.userLogin).subscribe((result) => {
+        this.routingService.navigateToRedirectPage(result.token);
+      });
   }
 }

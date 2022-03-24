@@ -6,7 +6,7 @@ import { UserManagementPanelComponent } from './user-management-panel/user-manag
 
 const routes: Routes = [
   { path: 'redirect', component: RedirectComponent },
-  { path: 'public/oauth/login', component: LoginComponent },
+  { path: 'public/login', component: LoginComponent },
   { path: 'management/login', component: LoginComponent },
   { path: '', component: UserManagementPanelComponent },
 ];
