@@ -14,9 +14,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { UserManagementPanelComponent } from './user-management-panel/user-management-panel.component';
+import { LoginComponent } from './login/login.component';
+import { AppRoutingModule } from './app-routing.module';
+import { RedirectComponent } from './redirect/redirect.component';
 
 @NgModule({
-  declarations: [AppComponent, UserDialogComponent, UserManagementPanelComponent],
+  declarations: [
+    AppComponent,
+    UserDialogComponent,
+    UserManagementPanelComponent,
+    LoginComponent,
+    RedirectComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -29,6 +38,7 @@ import { UserManagementPanelComponent } from './user-management-panel/user-manag
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
