@@ -39,6 +39,7 @@ export class UsersRoute {
         {
           name: req.body.name,
           email: req.body.email,
+          password: req.body.password,
         },
         { new: true }
       );
