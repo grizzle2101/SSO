@@ -13,6 +13,24 @@ body {
   width: 500px;
 }
 
-.mat-card-actions {
+.login {
+  display: flex;
+}
+.panel {
+  width: 50%;
+  height: 100vh;
+}
+
+.login-form {
+  padding-top: 15rem;
+  display: grid;
+}
+
+mat-form-field {
+  width: 20rem;
+  margin: auto;
+}
+
+.centered {
   text-align: center;
 }
