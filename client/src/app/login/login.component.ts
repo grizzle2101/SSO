@@ -21,14 +21,18 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    //todo - create seperate process for admin/management users.
     if (this.isManagementLogin)
       this.loginService.login(this.userLogin).subscribe((result) => {
+        this.storeToken(result.token);
         this.routingService.navigateToHome();
       });
     else
       this.loginService.login(this.userLogin).subscribe((result) => {
         this.routingService.navigateToRedirectPage(result.token);
       });
+  }
+
+  storeToken(token: string) {
+    localStorage.setItem('token', token);
   }
 }

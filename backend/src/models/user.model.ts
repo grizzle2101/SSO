@@ -16,6 +16,10 @@ const userSchema: Schema = new Schema({
     type: String,
     required: false,
   },
+  isManagement: {
+    type: Boolean,
+    required: false,
+  },
 });
 
 const userModel = model<User & Document>("User", userSchema);
