@@ -30,6 +30,7 @@ Create a .env file in the root directory, and copy this text into it.
 NODE_ENV = development
 DB_URI = <db_connection_string>
 PORT = <default_port>
+PRIVATE_KEY=<sso_jwt_private_key>
 ```
 
 ## Getting Angular App running:
