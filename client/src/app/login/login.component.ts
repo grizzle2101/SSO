@@ -22,18 +22,20 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.isManagementLogin)
-      this.loginService.login(this.userLogin).subscribe((result) => {
-        this.storeToken(result.token);
-        this.routingService.navigateToHome();
-      },
-        (error) => alert("Unfortunately we could not find your account")
-      );
+      this.loginService.login(this.userLogin).subscribe({
+        next: (result) => {
+          this.storeToken(result.token);
+          this.routingService.navigateToHome();
+        },
+        error: () => alert("Unfortunately we could not find your account")
+      });
     else
-      this.loginService.login(this.userLogin).subscribe((result) => {
-        this.routingService.navigateToRedirectPage(result.token);
-      },
-      (error) => alert("Unfortunately we could not find your account")
-      );
+      this.loginService.login(this.userLogin).subscribe({
+        next: (result) => {
+          this.routingService.navigateToRedirectPage(result.token);
+        },
+        error: () => alert("Unfortunately we could not find your account")
+      });
   }
 
   storeToken(token: string) {
