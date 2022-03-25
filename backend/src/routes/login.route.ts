@@ -15,7 +15,7 @@ export class LoginRoute {
   private initializeRoutes() {
     this.router.post(this.path, async (req, res) => {
       const user = await this.users.findOne({
-        email: req.body.email,
+        email: req.body.email.toLowerCase(),
       });
 
       if (!user) return res.status(404).send("Could not Find user.");
