@@ -10,7 +10,12 @@
       </div>
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" [(ngModel)]="userLogin.email" />
+        <input
+          matInput
+          placeholder="Email"
+          [(ngModel)]="userLogin.email"
+          (keyup.enter)="login()"
+        />
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
@@ -18,6 +23,7 @@
           matInput
           placeholder="Password"
           [(ngModel)]="userLogin.password"
+          (keyup.enter)="login()"
         />
       </mat-form-field>
     </div>
