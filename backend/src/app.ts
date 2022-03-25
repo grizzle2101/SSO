@@ -1,6 +1,5 @@
 import express from "express";
 import { Routes } from "./interfaces/routes.interface";
-import dotenv from "dotenv";
 import { connectToMongoDB } from "./startup/db";
 import cors from "cors";
 
@@ -10,7 +9,6 @@ class App {
   public port: string | number;
 
   constructor(routes: Routes[]) {
-    dotenv.config();
     this.app = express();
     this.env = process.env.NODE_ENV || "development";
     this.port = process.env.PORT || 3000;
