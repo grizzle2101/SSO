@@ -26,8 +26,10 @@ export class ManagementGuard implements CanActivate {
     var token = localStorage.getItem('token');
     const isManagement = this.getDecodedAccessToken(token)?.user.isManagement;
 
-    if (!isManagement) this.routingService.navigateToLogin();
-
+    if (!isManagement) {
+      localStorage.clear()
+      this.routingService.navigateToLogin();
+    }
     return isManagement;
   }
 
