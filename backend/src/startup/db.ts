@@ -1,13 +1,10 @@
-import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { set } from "mongoose";
+import { logger } from "./logger";
 
 export function connectToMongoDB() {
-  dotenv.config();
-
   const db = process.env.DB_URI;
-
-  let env = process.env.NODE_ENV || "development";
+  const env = process.env.NODE_ENV || "development";
 
   if (env !== "production") {
     set("debug", true);
@@ -15,6 +12,6 @@ export function connectToMongoDB() {
 
   mongoose
     .connect(db)
-    .then(() => console.log(`Connected to ${db}...`))
-    .catch((error) => console.log("Failed to connect to MongoDB - ", error));
+    .then(() => logger.info(`Connected to ${db}...`))
+    .catch((error) => logger.info("Failed to connect to MongoDB - ", error));
 }

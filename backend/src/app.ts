@@ -1,12 +1,14 @@
 import express from "express";
 import { Routes } from "./interfaces/routes.interface";
 import { connectToMongoDB } from "./startup/db";
+import { logger } from "./startup/logger";
 import cors from "cors";
 
 class App {
   public app: express.Application;
   public env: string;
   public port: string | number;
+  public logger = logger;
 
   constructor(routes: Routes[]) {
     this.app = express();
@@ -20,8 +22,8 @@ class App {
 
   public listen() {
     this.app.listen(this.port, () => {
-      console.log(`======= ENV: ${this.env} =======`);
-      console.log(`🚀 App listening on the port ${this.port}`);
+      logger.info(`======= ENV: ${this.env} =======`);
+      logger.info(`🚀 App listening on the port ${this.port}`);
     });
   }
 
