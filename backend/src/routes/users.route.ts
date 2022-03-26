@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { User } from "../interfaces/user.interface";
 import userModel from "../models/user.model";
+import bcrypt from "bcryptjs";
 
 export class UsersRoute {
   public path = "/api/users";
@@ -13,9 +14,17 @@ export class UsersRoute {
 
   private initializeRoutes() {
     this.router.post(this.path, async (req, res) => {
+      let user = await this.users.findOne({ email: req.body.email });
+
+      if (user) return res.status(400).send("User already registered.");
+
+      const saltedPassword = await this.saltPassword(req.body.password);
+
       const result = await this.users.create({
         name: req.body.name,
         email: req.body.email.toLowerCase(),
+        password: saltedPassword,
+        isManagement: req.body.isManagement,
       });
       res.send(result);
     });
@@ -40,6 +49,7 @@ export class UsersRoute {
           name: req.body.name,
           email: req.body.email.toLowerCase(),
           password: req.body.password,
+          isManagement: req.body.isManagement,
         },
         { new: true }
       );
@@ -52,5 +62,10 @@ export class UsersRoute {
       const user: User[] = await this.users.findByIdAndDelete(userId);
       res.send(user);
     });
+  }
+
+  private async saltPassword(password: string) {
+    const salt = await bcrypt.genSalt(10);
+    return await bcrypt.hash(password, salt);
   }
 }

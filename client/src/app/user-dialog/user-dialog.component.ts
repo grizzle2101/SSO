@@ -12,6 +12,9 @@ export class UserDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: UserDialogData
   ) {}
 
+  setIsManagement(toggle: boolean) {
+    this.data.isManagement = toggle;
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -21,4 +24,7 @@ export interface UserDialogData {
   _id: string;
   name: string;
   email: string;
+  password: string;
+  isManagement: boolean;
+  editMode: boolean;
 }
