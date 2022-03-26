@@ -19,10 +19,10 @@ export class LoginRoute {
         email: req.body.email,
       });
 
-      const password = await bcrypt.compare(req.body.password, user.password);
+      if (!user) return res.status(404).send("Invalid email");
 
-      if (!user || !password)
-        return res.status(404).send("Invalid email or password");
+      const password = await bcrypt.compare(req.body.password, user.password);
+      if (!password) return res.status(404).send("Incorrect password");
 
       const token = jwt.sign({ user }, this.privateKey);
 
