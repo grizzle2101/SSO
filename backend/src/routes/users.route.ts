@@ -24,6 +24,7 @@ export class UsersRoute {
         name: req.body.name,
         email: req.body.email.toLowerCase(),
         password: saltedPassword,
+        isManagement: req.body.isManagement,
       });
       res.send(result);
     });

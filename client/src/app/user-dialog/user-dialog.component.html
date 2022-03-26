@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Create user</h1>
-<div mat-dialog-content>
+<div class="form-panel" mat-dialog-content>
   <mat-form-field appearance="fill">
     <mat-label>Username</mat-label>
     <input matInput [(ngModel)]="data.name" />
@@ -12,8 +12,12 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Password</mat-label>
-    <input matInput [(ngModel)]="data.password" />
+    <input matInput type="password" [(ngModel)]="data.password" />
   </mat-form-field>
+
+  <mat-checkbox (change)="setIsManagement($event.checked)">
+    Management Access
+  </mat-checkbox>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>

@@ -54,8 +54,13 @@ export class UserManagementPanelComponent {
 
   openDialog(user: any = {}) {
     return this.dialog.open(UserDialogComponent, {
-      width: '250px',
-      data: { _id: user._id, name: user.name, email: user.email },
+      width: '300px',
+      data: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isManagement: user.isManagement,
+      },
     });
   }
 }
