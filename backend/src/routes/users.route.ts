@@ -49,6 +49,7 @@ export class UsersRoute {
           name: req.body.name,
           email: req.body.email.toLowerCase(),
           password: req.body.password,
+          isManagement: req.body.isManagement,
         },
         { new: true }
       );
