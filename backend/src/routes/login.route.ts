@@ -9,9 +9,6 @@ export class LoginRoute {
   public users = userModel;
   private privateKey = process.env.PRIVATE_KEY;
 
-  //I don't know if this can or should be managed from here?
-  private isManagementLogin = false; 
-
   constructor() {
     this.initializeRoutes();
   }

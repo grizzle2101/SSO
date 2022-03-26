@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { throwError } from 'rxjs';
 import { TokenHelper } from '../helpers/tokenHelper';
 import { Login, LoginService } from '../services/login.service';
 import { RoutingService } from '../services/routing.service';
@@ -30,7 +29,7 @@ export class LoginComponent implements OnInit {
     if (this.isManagementLogin)
       this.loginService.login(this.userLogin).subscribe({
         next: (result) => {
-          if (this.tokenHelper.getDecodedAccessToken(result)?.user.isManagement) {
+          if (this.tokenHelper.getDecodedAccessToken(result.token)?.user.isManagement) {
             this.storeToken(result.token);
             this.routingService.navigateToHome();
           }
