@@ -26,4 +26,5 @@ export interface UserDialogData {
   email: string;
   password: string;
   isManagement: boolean;
+  editMode: boolean;
 }

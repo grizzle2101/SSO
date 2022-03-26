@@ -29,12 +29,13 @@ export class UserManagementPanelComponent {
   }
 
   editUser(user: any) {
-    const dialog = this.openDialog(user);
+    const dialog = this.openDialog(user, true);
     dialog.afterClosed().subscribe((updatedUser) => {
       if (updatedUser)
         this.usersServive.editUser(updatedUser).subscribe((editedUser) => {
           user.name = editedUser.name;
           user.email = editedUser.email;
+          user.isManagement = editedUser.isManagement;
         });
     });
   }
@@ -52,7 +53,7 @@ export class UserManagementPanelComponent {
     });
   }
 
-  openDialog(user: any = {}) {
+  openDialog(user: any = {}, editMode: boolean = false) {
     return this.dialog.open(UserDialogComponent, {
       width: '300px',
       data: {
@@ -60,6 +61,7 @@ export class UserManagementPanelComponent {
         name: user.name,
         email: user.email,
         isManagement: user.isManagement,
+        editMode,
       },
     });
   }

@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Create user</h1>
+<h1 mat-dialog-title>{{ data.editMode ? "Edit" : "Create" }} user</h1>
 <div class="form-panel" mat-dialog-content>
   <mat-form-field appearance="fill">
     <mat-label>Username</mat-label>
@@ -10,16 +10,21 @@
     <input matInput [(ngModel)]="data.email" />
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" *ngIf="!data.editMode">
     <mat-label>Password</mat-label>
     <input matInput type="password" [(ngModel)]="data.password" />
   </mat-form-field>
 
-  <mat-checkbox (change)="setIsManagement($event.checked)">
+  <mat-checkbox
+    (change)="setIsManagement($event.checked)"
+    [(ngModel)]="data.isManagement"
+  >
     Management Access
   </mat-checkbox>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Create</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>
+    {{ data.editMode ? "Update" : "Create" }}
+  </button>
 </div>
