@@ -9,6 +9,11 @@
     <mat-label>Email</mat-label>
     <input matInput [(ngModel)]="data.email" />
   </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput [(ngModel)]="data.password" />
+  </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
