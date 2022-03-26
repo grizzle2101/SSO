@@ -18,10 +18,12 @@ export class UsersRoute {
 
       if (user) return res.status(400).send("User already registered.");
 
+      const saltedPassword = await this.saltPassword(req.body.password);
+
       const result = await this.users.create({
         name: req.body.name,
         email: req.body.email.toLowerCase(),
-        password: this.saltPassword(req.body.password),
+        password: saltedPassword,
       });
       res.send(result);
     });

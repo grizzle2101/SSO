@@ -1,6 +1,7 @@
 import { Router } from "express";
 import userModel from "../models/user.model";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 export class LoginRoute {
   public path = "/api/login";
@@ -15,11 +16,13 @@ export class LoginRoute {
   private initializeRoutes() {
     this.router.post(this.path, async (req, res) => {
       const user = await this.users.findOne({
-        email: req.body.email.toLowerCase(),
-        password: req.body.password,
+        email: req.body.email,
       });
 
-      if (!user) return res.status(404).send("Could not Find user.");
+      const password = await bcrypt.compare(req.body.password, user.password);
+
+      if (!user || !password)
+        return res.status(404).send("Invalid email or password");
 
       const token = jwt.sign({ user }, this.privateKey);
 
