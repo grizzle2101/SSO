@@ -18,6 +18,7 @@ import { UserManagementPanelComponent } from './user-management-panel/user-manag
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RedirectComponent } from './redirect/redirect.component';
+import { TokenHelper } from './helpers/tokenHelper';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { RedirectComponent } from './redirect/redirect.component';
     FormsModule,
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [TokenHelper],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

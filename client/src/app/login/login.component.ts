@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { throwError } from 'rxjs';
+import { TokenHelper } from '../helpers/tokenHelper';
 import { Login, LoginService } from '../services/login.service';
 import { RoutingService } from '../services/routing.service';
 
@@ -14,7 +16,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
-    private routingService: RoutingService
+    private routingService: RoutingService,
+    private tokenHelper: TokenHelper
   ) {}
 
   ngOnInit(): void {
@@ -27,9 +30,12 @@ export class LoginComponent implements OnInit {
     if (this.isManagementLogin)
       this.loginService.login(this.userLogin).subscribe({
         next: (result) => {
-          this.storeToken(result.token);
-          this.routingService.navigateToHome();
-        },
+          if (this.tokenHelper.getDecodedAccessToken(result)?.user.isManagement) {
+            this.storeToken(result.token);
+            this.routingService.navigateToHome();
+          }
+          else this.errorText = "User is not a management user";
+          },
         error: (e) => {
           this.errorText = e.error;
         }

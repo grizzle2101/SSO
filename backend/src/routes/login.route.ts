@@ -26,7 +26,6 @@ export class LoginRoute {
 
       const password = await bcrypt.compare(req.body.password, user.password);
       if (!password) return res.status(404).send("Incorrect password");
-      if (this.isManagementLogin && !user.isManagement) return res.status(404).send("Insufficient permission to access management app")
 
       const token = jwt.sign({ user }, this.privateKey);
 
