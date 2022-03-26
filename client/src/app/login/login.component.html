@@ -20,6 +20,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
         <input
+          type="password"
           matInput
           placeholder="Password"
           [(ngModel)]="userLogin.password"
@@ -30,6 +31,11 @@
     <div class="centered">
       <button mat-button>Cancel</button>
       <button mat-button (click)="login()">Login</button>
+    </div>
+    <div class="centered">
+      <p style="color: red">
+        {{ errorText }}
+      </p>
     </div>
   </div>
 </div>

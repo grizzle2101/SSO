@@ -9,6 +9,7 @@ import { RoutingService } from '../services/routing.service';
 })
 export class LoginComponent implements OnInit {
   isManagementLogin: boolean = false;
+  errorText: String = "";
   public userLogin: Login = { email: '', password: '' };
 
   constructor(
@@ -21,20 +22,26 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.errorText = ""
+
     if (this.isManagementLogin)
       this.loginService.login(this.userLogin).subscribe({
         next: (result) => {
           this.storeToken(result.token);
           this.routingService.navigateToHome();
         },
-        error: () => alert("Unfortunately we could not find your account")
+        error: (e) => {
+          this.errorText = e.error;
+        }
       });
     else
       this.loginService.login(this.userLogin).subscribe({
         next: (result) => {
           this.routingService.navigateToRedirectPage(result.token);
         },
-        error: () => alert("Unfortunately we could not find your account")
+        error: (e) => {
+          this.errorText = e.error;
+        }
       });
   }
 

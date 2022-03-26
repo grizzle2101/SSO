@@ -9,6 +9,9 @@ export class LoginRoute {
   public users = userModel;
   private privateKey = process.env.PRIVATE_KEY;
 
+  //I don't know if this can or should be managed from here?
+  private isManagementLogin = false; 
+
   constructor() {
     this.initializeRoutes();
   }
@@ -23,6 +26,7 @@ export class LoginRoute {
 
       const password = await bcrypt.compare(req.body.password, user.password);
       if (!password) return res.status(404).send("Incorrect password");
+      if (this.isManagementLogin && !user.isManagement) return res.status(404).send("Insufficient permission to access management app")
 
       const token = jwt.sign({ user }, this.privateKey);
 

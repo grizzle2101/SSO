@@ -29,7 +29,6 @@ export class ManagementGuard implements CanActivate {
     if (!isManagement) {
       localStorage.clear()
       this.routingService.navigateToLogin();
-      window.alert("You do not have management access")
     }
     return isManagement;
   }
