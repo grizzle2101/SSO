@@ -6,14 +6,15 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import jwt_decode from 'jwt-decode';
 import { RoutingService } from '../services/routing.service';
+import { TokenHelper } from '../helpers/tokenHelper';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class ManagementGuard implements CanActivate {
-  constructor(private routingService: RoutingService) {}
+  constructor(private routingService: RoutingService, private tokenHelper: TokenHelper) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -24,21 +25,13 @@ export class ManagementGuard implements CanActivate {
     | boolean
     | UrlTree {
     var token = localStorage.getItem('token');
-    const isManagement = this.getDecodedAccessToken(token)?.user.isManagement;
+    const isManagement = this.tokenHelper.getDecodedAccessToken(token)?.user.isManagement;
 
     if (!isManagement) {
       localStorage.clear()
       this.routingService.navigateToLogin();
-      window.alert("You do not have management access")
     }
     return isManagement;
   }
 
-  getDecodedAccessToken(token: any): any {
-    try {
-      return jwt_decode(token);
-    } catch (Error) {
-      return null;
-    }
-  }
 }

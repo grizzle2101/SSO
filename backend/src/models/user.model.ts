@@ -5,16 +5,15 @@ const userSchema: Schema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: false,
   },
   email: {
     type: String,
-    required: false,
-    unique: false,
+    required: true,
+    unique: true,
   },
   password: {
     type: String,
-    required: false,
+    required: true,
   },
   isManagement: {
     type: Boolean,
