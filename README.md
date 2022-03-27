@@ -1,6 +1,7 @@
 # SSO
 
 [![Node.js CI](https://github.com/grizzle2101/SSO/actions/workflows/node.js.yml/badge.svg)](https://github.com/grizzle2101/SSO/actions/workflows/node.js.yml)
+
 Simple sign on is a self hosted, single sign on provider & user management interface built entirely in Typescript, using the MEAN Stack.
 (MongoDB, Express.js, Angular & Node.js).
 
