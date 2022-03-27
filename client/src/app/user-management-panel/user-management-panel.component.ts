@@ -10,6 +10,7 @@ import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 })
 export class UserManagementPanelComponent {
   users: any[] = [];
+  errorText: String = ""
 
   constructor(private usersServive: UsersService, private dialog: MatDialog) {
     this.usersServive.getUsers().subscribe((users) => {
@@ -18,26 +19,33 @@ export class UserManagementPanelComponent {
   }
 
   addUser() {
+    this.errorText = "";
     const dialog = this.openDialog();
-
     dialog.afterClosed().subscribe((updatedUser) => {
       if (updatedUser)
-        this.usersServive.addUser(updatedUser).subscribe((addedUser) => {
-          this.users.push(addedUser);
-        });
-    });
+          this.usersServive.addUser(updatedUser).subscribe({
+            next: (addedUser) => {
+              this.users.push(addedUser);
+            },
+            error: (e) => {this.errorText = e.error} 
+          });
+      });
   }
 
   editUser(user: any) {
+    this.errorText = "";
     const dialog = this.openDialog(user, true);
     dialog.afterClosed().subscribe((updatedUser) => {
-      if (updatedUser)
-        this.usersServive.editUser(updatedUser).subscribe((editedUser) => {
-          user.name = editedUser.name;
-          user.email = editedUser.email;
-          user.isManagement = editedUser.isManagement;
-        });
-    });
+        if (updatedUser)
+          this.usersServive.editUser(updatedUser).subscribe({
+            next: (editedUser) => {
+              user.name = editedUser.name;
+              user.email = editedUser.email;
+              user.isManagement = editedUser.isManagement;
+            },
+            error: (e) => {this.errorText=e.error}
+          });
+      });
   }
 
   resetPassword(user: any) {
