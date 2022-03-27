@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -13,6 +16,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   declarations: [],
   imports: [
     CommonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
     MatButtonModule,
     MatCardModule,
     MatDividerModule,
@@ -23,6 +29,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatCheckboxModule,
   ],
   exports: [
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
     MatButtonModule,
     MatCardModule,
     MatDividerModule,

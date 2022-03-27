@@ -1,6 +1,33 @@
-<div class="banner">
-  <h1>Simple Sign On</h1>
-</div>
+<ng-container>
+  <mat-toolbar color="primary">
+    <button (click)="sidenav.toggle()" mat-icon-button aria-label="Menu Label">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>SSO</span>
+  </mat-toolbar>
 
-<mat-divider></mat-divider>
-<router-outlet></router-outlet>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="side" class="sidenav">
+      <mat-selection-list [multiple]="false">
+        <mat-list-option *ngFor="let navLink of sideNavLinks" [value]="navLink">
+          <div class="nav-link" (click)="navigate(navLink.link)">
+            <mat-icon class="material-icons-outlined">
+              {{ navLink.icon }}</mat-icon
+            >
+            {{ navLink.displayName }}
+          </div>
+        </mat-list-option>
+        <mat-list-option>
+          <div class="nav-link" (click)="logout()">
+            <mat-icon class="material-icons-outlined"> logout</mat-icon>
+            Logout
+          </div>
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-container>
