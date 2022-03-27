@@ -29,13 +29,9 @@
       </mat-form-field>
     </div>
     <div class="centered">
+      <mat-error class="centered" style="color: red">{{ errorText }}</mat-error>
       <button mat-button>Cancel</button>
       <button mat-button (click)="login()">Login</button>
-    </div>
-    <div class="centered">
-      <p style="color: red">
-        {{ errorText }}
-      </p>
     </div>
   </div>
 </div>
