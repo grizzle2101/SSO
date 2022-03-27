@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TokenHelper } from './helpers/tokenHelper';
 import { RoutingService } from './services/routing.service';
 
 @Component({
@@ -9,10 +10,13 @@ import { RoutingService } from './services/routing.service';
 export class AppComponent {
   title = 'client';
 
-  constructor(private routingService: RoutingService) {}
+  constructor(
+    private routingService: RoutingService,
+    private tokenHelper: TokenHelper
+  ) {}
 
   sideNavLinks: Link[] = [
-    { icon: 'dashboard', displayName: 'Dashboard', link: 'dashboards' },
+    { icon: 'dashboard', displayName: 'Dashboard', link: '/' },
     {
       icon: 'manage_accounts',
       displayName: 'User Management',
@@ -24,7 +28,10 @@ export class AppComponent {
     this.routingService.navigateToLink(link);
   }
 
-  logout() {}
+  logout() {
+    this.tokenHelper.removeToken();
+    this.routingService.navigateToLogin();
+  }
 }
 
 export interface Link {

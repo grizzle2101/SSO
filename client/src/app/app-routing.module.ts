@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { RedirectComponent } from './redirect/redirect.component';
 import { ManagementGuard } from './route-guards/management.guard';
@@ -10,8 +11,13 @@ const routes: Routes = [
   { path: 'public/login', component: LoginComponent },
   { path: 'management/login', component: LoginComponent },
   {
-    path: '',
+    path: 'user-management',
     component: UserManagementPanelComponent,
+    canActivate: [ManagementGuard],
+  },
+  {
+    path: '',
+    component: DashboardComponent,
     canActivate: [ManagementGuard],
   },
 ];

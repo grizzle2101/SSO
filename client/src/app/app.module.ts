@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { RedirectComponent } from './redirect/redirect.component';
 import { TokenHelper } from './helpers/tokenHelper';
 import { MaterialModule } from './modules/material/material.module';
+import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { MaterialModule } from './modules/material/material.module';
     UserManagementPanelComponent,
     LoginComponent,
     RedirectComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
