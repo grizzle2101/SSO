@@ -6,7 +6,7 @@ import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 @Component({
   selector: 'app-user-management-panel',
   templateUrl: './user-management-panel.component.html',
-  styleUrls: ['./user-management-panel.component.css'],
+  styleUrls: ['./user-management-panel.component.scss'],
 })
 export class UserManagementPanelComponent {
   users: any[] = [];
