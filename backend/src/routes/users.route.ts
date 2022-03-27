@@ -52,12 +52,13 @@ export class UsersRoute {
 
       const userId: string = req.params.id;
 
+      const saltedPassword = await this.saltPassword(req.body.password);
       const user: User[] = await this.users.findByIdAndUpdate(
         userId,
         {
           name: req.body.name,
           email: req.body.email.toLowerCase(),
-          password: req.body.password,
+          password: saltedPassword,
           isManagement: req.body.isManagement,
         },
         { new: true }
