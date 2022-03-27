@@ -29,7 +29,7 @@ export class LoginRoute {
       const password = await bcrypt.compare(req.body.password, user.password);
       if (!password) return res.status(404).send("Incorrect password");
 
-      const token = jwt.sign({ user, date: new Date() }, this.privateKey);
+      const token = jwt.sign({ user }, this.privateKey);
 
       res.send({ token });
     });
