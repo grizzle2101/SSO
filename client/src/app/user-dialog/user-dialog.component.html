@@ -4,7 +4,7 @@
     <mat-label>Username</mat-label>
     <input
       matInput
-      [(ngModel)]="data.name"
+      [(ngModel)]="data.user.name"
       [formControl]="nameFormControls"
       [errorStateMatcher]="matcher"
       required
@@ -24,7 +24,7 @@
     <mat-label>Email</mat-label>
     <input
       matInput
-      [(ngModel)]="data.email"
+      [(ngModel)]="data.user.email"
       [formControl]="emailFormControls"
       [errorStateMatcher]="matcher"
     />
@@ -47,7 +47,7 @@
     <input
       matInput
       type="password"
-      [(ngModel)]="data.password"
+      [(ngModel)]="data.user.password"
       [formControl]="passwordFormControls"
       [errorStateMatcher]="matcher"
     />
@@ -64,7 +64,7 @@
 
   <mat-checkbox
     (change)="setIsManagement($event.checked)"
-    [(ngModel)]="data.isManagement"
+    [(ngModel)]="data.user.isManagement"
   >
     Management Access
   </mat-checkbox>

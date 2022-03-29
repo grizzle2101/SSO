@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { User, UsersService } from '../services/users.service';
+import { UsersService } from '../services/users.service';
 import {
   UserDialogComponent,
   UserDialogData,
@@ -24,9 +24,9 @@ export class UserManagementPanelComponent {
   addUser() {
     this.errorText = '';
     const dialog = this.openDialog();
-    dialog.afterClosed().subscribe((formValues) => {
-      if (formValues)
-        this.usersServive.addUser(formValues).subscribe({
+    dialog.afterClosed().subscribe((dialogResult) => {
+      if (dialogResult)
+        this.usersServive.addUser(dialogResult.user).subscribe({
           next: (addedUser) => {
             this.users.push(addedUser);
           },
@@ -39,33 +39,31 @@ export class UserManagementPanelComponent {
 
   editUser(user: any) {
     this.errorText = '';
-    let id = user._id;
-    delete user._id;
     const dialog = this.openDialog(user, true);
-    dialog.afterClosed().subscribe((formValues) => {
-      if (formValues) delete formValues.editMode;
-      this.usersServive.editUser(id, formValues).subscribe({
-        next: (editedUser) => {
-          user.name = editedUser.name;
-          user.email = editedUser.email;
-          user.isManagement = editedUser.isManagement;
-        },
-        error: (e) => {
-          this.errorText = e.error;
-        },
-      });
+    dialog.afterClosed().subscribe((dialogResult) => {
+      if (dialogResult)
+        this.usersServive
+          .editUser(dialogResult._id, dialogResult.user)
+          .subscribe({
+            next: (editedUser) => {
+              user.name = editedUser.name;
+              user.email = editedUser.email;
+              user.isManagement = editedUser.isManagement;
+            },
+            error: (e) => {
+              this.errorText = e.error;
+            },
+          });
     });
-    user._id = id;
   }
 
   resetPassword(user: any) {
     user.password = '';
-    let id = user._id;
-    delete user.id;
-    this.usersServive.editUser(user.id, user).subscribe((editedUser) => {
-      user.password = editedUser.password;
-    });
-    user._id = id;
+    this.usersServive
+      .editUser(user._id, user.password)
+      .subscribe((editedUser) => {
+        user.user.password = editedUser.password;
+      });
   }
 
   deleteUser(user: any) {
@@ -79,10 +77,12 @@ export class UserManagementPanelComponent {
       width: '300px',
       data: {
         _id: user._id,
-        name: user.name,
-        email: user.email,
-        isManagement: user.isManagement,
         editMode,
+        user: {
+          name: user.name,
+          email: user.email,
+          isManagement: user.isManagement,
+        },
       },
     });
   }

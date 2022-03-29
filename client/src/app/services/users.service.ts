@@ -19,8 +19,8 @@ export class UsersService {
     return this.http.post(this.url, user);
   }
 
-  editUser(id: string, user: User): Observable<any> {
-    return this.http.put(`${this.url}/${id}`, user);
+  editUser(id: string, user: User): Observable<User> {
+    return this.http.put<User>(`${this.url}/${id}`, user);
   }
 
   deleteUser(id: string): Observable<any> {
@@ -31,6 +31,6 @@ export class UsersService {
 export interface User {
   name: string;
   email: string;
-  password: string;
+  password?: string;
   isManagement: boolean;
 }
