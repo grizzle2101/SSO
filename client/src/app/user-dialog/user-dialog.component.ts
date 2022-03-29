@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogErrorStateMatcherModule } from '../helpers/dialogErrorStateMatcherModule';
+import { User } from '../services/users.service';
 
 @Component({
   selector: 'app-user-dialog',
@@ -15,7 +16,7 @@ export class UserDialogComponent {
   ) {}
 
   setIsManagement(toggle: boolean) {
-    this.data.isManagement = toggle;
+    this.data.user.isManagement = toggle;
   }
   onNoClick(): void {
     this.dialogRef.close();
@@ -42,9 +43,6 @@ export class UserDialogComponent {
 
 export interface UserDialogData {
   _id: string;
-  name: string;
-  email: string;
-  password: string;
-  isManagement: boolean;
+  user: User;
   editMode: boolean;
 }
