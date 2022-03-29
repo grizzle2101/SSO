@@ -15,9 +15,9 @@ export class UsersRoute {
 
   private initializeRoutes() {
     this.router.post(this.path, async (req, res) => {
-      
       const requestValidity = this.validateCreateRequest(req.body);
-      if (requestValidity.error) return res.status(404).send(requestValidity.error.message);
+      if (requestValidity.error)
+        return res.status(404).send(requestValidity.error.message);
 
       let user = await this.users.findOne({ email: req.body.email });
 
@@ -46,12 +46,11 @@ export class UsersRoute {
     });
 
     this.router.put(`${this.path}/:id`, async (req, res) => {
-
       const requestValidity = this.validateUpdateRequest(req.body);
-      if (requestValidity.error) return res.status(404).send(requestValidity.error.message);
+      if (requestValidity.error)
+        return res.status(404).send(requestValidity.error.message);
 
       const userId: string = req.params.id;
-
       const user: User[] = await this.users.findByIdAndUpdate(
         userId,
         {
@@ -77,25 +76,22 @@ export class UsersRoute {
     return await bcrypt.hash(password, salt);
   }
 
-  private validateCreateRequest (request: any) {
+  private validateCreateRequest(request: any) {
     const schema = Joi.object({
       name: Joi.string().min(5).max(255).required(),
       email: Joi.string().min(5).max(320).required().email(),
       password: Joi.string().min(5).max(255).required(),
       isManagement: Joi.bool(),
-      editMode: Joi.bool(),
     });
     return schema.validate(request);
-  } 
+  }
 
-  private validateUpdateRequest (request: any) {
+  private validateUpdateRequest(request: any) {
     const schema = Joi.object({
-      _id: Joi.string(),
       name: Joi.string().min(5).max(255).required(),
       email: Joi.string().min(5).max(320).required().email(),
       isManagement: Joi.bool(),
-      editMode: Joi.bool(),
     });
     return schema.validate(request);
-  } 
+  }
 }

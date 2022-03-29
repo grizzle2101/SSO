@@ -21,9 +21,22 @@ export class UserDialogComponent {
     this.dialogRef.close();
   }
 
-  nameFormControls = new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]);
-  emailFormControls = new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(320), Validators.email]);
-  passwordFormControls = new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]);
+  nameFormControls = new FormControl('', [
+    Validators.required,
+    Validators.minLength(5),
+    Validators.maxLength(255),
+  ]);
+  emailFormControls = new FormControl('', [
+    Validators.required,
+    Validators.minLength(5),
+    Validators.maxLength(320),
+    Validators.email,
+  ]);
+  passwordFormControls = new FormControl('', [
+    Validators.required,
+    Validators.minLength(5),
+    Validators.maxLength(255),
+  ]);
   matcher = new DialogErrorStateMatcherModule();
 }
 
