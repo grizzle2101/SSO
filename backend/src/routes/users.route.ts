@@ -2,6 +2,7 @@ import { Router } from "express";
 import { User } from "../interfaces/user.interface";
 import userModel from "../models/user.model";
 import bcrypt from "bcryptjs";
+import Joi from "joi";
 
 export class UsersRoute {
   public path = "/api/users";
@@ -14,6 +15,10 @@ export class UsersRoute {
 
   private initializeRoutes() {
     this.router.post(this.path, async (req, res) => {
+      const requestValidity = this.validateRequest(true, req.body);
+      if (requestValidity.error)
+        return res.status(404).send(requestValidity.error.message);
+
       let user = await this.users.findOne({ email: req.body.email });
 
       if (user) return res.status(400).send("User already registered.");
@@ -22,7 +27,7 @@ export class UsersRoute {
 
       const result = await this.users.create({
         name: req.body.name,
-        email: req.body.email.toLowerCase(),
+        email: requestValidity.value.email,
         password: saltedPassword,
         isManagement: req.body.isManagement,
       });
@@ -41,14 +46,16 @@ export class UsersRoute {
     });
 
     this.router.put(`${this.path}/:id`, async (req, res) => {
-      const userId: string = req.params.id;
+      const requestValidity = this.validateRequest(false, req.body);
+      if (requestValidity.error)
+        return res.status(404).send(requestValidity.error.message);
 
+      const userId: string = req.params.id;
       const user: User[] = await this.users.findByIdAndUpdate(
         userId,
         {
           name: req.body.name,
-          email: req.body.email.toLowerCase(),
-          password: req.body.password,
+          email: requestValidity.value.email,
           isManagement: req.body.isManagement,
         },
         { new: true }
@@ -67,5 +74,15 @@ export class UsersRoute {
   private async saltPassword(password: string) {
     const salt = await bcrypt.genSalt(10);
     return await bcrypt.hash(password, salt);
+  }
+
+  private validateRequest(create: boolean, request: any) {
+    const schema = Joi.object({
+      name: Joi.string().min(5).max(255).required(),
+      email: Joi.string().min(5).max(320).required().email().lowercase(),
+      isManagement: Joi.bool().optional(),
+      password: create ? Joi.string().min(5).max(255) : Joi.forbidden(),
+    });
+    return schema.validate(request, { convert: true });
   }
 }
