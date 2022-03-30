@@ -1,6 +1,11 @@
 <div class="banner" id="banner">
   <h1 id="banner-left">Simple Sign On</h1>
-  <button *ngIf="checkLogin()" mat-button (click)="logOut()" id="banner-right">
+  <button
+    *ngIf="checkLogin()"
+    mat-stroked-button
+    (click)="logOut()"
+    id="banner-right"
+  >
     Log out
   </button>
 </div>
