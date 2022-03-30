@@ -9,12 +9,14 @@ import { Observable } from 'rxjs';
 import { RoutingService } from '../services/routing.service';
 import { TokenHelper } from '../helpers/tokenHelper';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class ManagementGuard implements CanActivate {
-  constructor(private routingService: RoutingService, private tokenHelper: TokenHelper) { }
+  constructor(
+    private routingService: RoutingService,
+    private tokenHelper: TokenHelper
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -24,14 +26,14 @@ export class ManagementGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    var token = localStorage.getItem('token');
-    const isManagement = this.tokenHelper.getDecodedAccessToken(token)?.user.isManagement;
+    var token = this.tokenHelper.getToken();
+    const isManagement =
+      this.tokenHelper.getDecodedToken(token)?.user.isManagement;
 
     if (!isManagement) {
-      localStorage.clear()
+      this.tokenHelper.removeToken();
       this.routingService.navigateToLogin();
     }
     return isManagement;
   }
-
 }

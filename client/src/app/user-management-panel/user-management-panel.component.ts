@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersService } from '../services/users.service';
-import {
-  UserDialogComponent,
-  UserDialogData,
-} from '../user-dialog/user-dialog.component';
+import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 
 @Component({
   selector: 'app-user-management-panel',
