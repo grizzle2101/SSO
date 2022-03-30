@@ -7,6 +7,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class RoutingService {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
+  navigateToLink(link: string) {
+    this.router.navigateByUrl(link);
+  }
+
   navigateToHome() {
     this.router.navigateByUrl('/');
   }
