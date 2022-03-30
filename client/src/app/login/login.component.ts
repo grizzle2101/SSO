@@ -10,7 +10,7 @@ import { RoutingService } from '../services/routing.service';
 })
 export class LoginComponent implements OnInit {
   isManagementLogin: boolean = false;
-  errorText: String = "";
+  errorText: String = '';
   public userLogin: Login = { email: '', password: '' };
 
   constructor(
@@ -21,23 +21,28 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.isManagementLogin = this.routingService.isManagementLogin();
+    if (this.isManagementLogin && localStorage.getItem('token')) {
+      this.routingService.navigateToHome();
+    }
   }
 
   login() {
-    this.errorText = ""
+    this.errorText = '';
 
     if (this.isManagementLogin)
       this.loginService.login(this.userLogin).subscribe({
         next: (result) => {
-          if (this.tokenHelper.getDecodedAccessToken(result.token)?.user.isManagement) {
+          if (
+            this.tokenHelper.getDecodedAccessToken(result.token)?.user
+              .isManagement
+          ) {
             this.storeToken(result.token);
             this.routingService.navigateToHome();
-          }
-          else this.errorText = "User is not a management user";
-          },
+          } else this.errorText = 'User is not a management user';
+        },
         error: (e) => {
           this.errorText = e.error;
-        }
+        },
       });
     else
       this.loginService.login(this.userLogin).subscribe({
@@ -46,7 +51,7 @@ export class LoginComponent implements OnInit {
         },
         error: (e) => {
           this.errorText = e.error;
-        }
+        },
       });
   }
 
