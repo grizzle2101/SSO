@@ -15,7 +15,3 @@ mat-form-field {
   width: 20rem;
   margin: auto;
 }
-
-video {
-  object-fit: fill;
-}

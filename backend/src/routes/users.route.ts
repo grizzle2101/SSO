@@ -3,6 +3,7 @@ import { User } from "../interfaces/user.interface";
 import userModel from "../models/user.model";
 import bcrypt from "bcryptjs";
 import Joi from "joi";
+import { join } from "path";
 
 export class UsersRoute {
   public path = "/api/users";
@@ -15,7 +16,7 @@ export class UsersRoute {
 
   private initializeRoutes() {
     this.router.post(this.path, async (req, res) => {
-      const requestValidity = this.validateCreateRequest(req.body);
+      const requestValidity = this.validateRequest(true, req.body);
       if (requestValidity.error)
         return res.status(404).send(requestValidity.error.message);
 
@@ -27,7 +28,7 @@ export class UsersRoute {
 
       const result = await this.users.create({
         name: req.body.name,
-        email: req.body.email.toLowerCase(),
+        email: requestValidity.value.email,
         password: saltedPassword,
         isManagement: req.body.isManagement,
       });
@@ -46,7 +47,7 @@ export class UsersRoute {
     });
 
     this.router.put(`${this.path}/:id`, async (req, res) => {
-      const requestValidity = this.validateUpdateRequest(req.body);
+      const requestValidity = this.validateRequest(false, req.body);
       if (requestValidity.error)
         return res.status(404).send(requestValidity.error.message);
 
@@ -55,7 +56,7 @@ export class UsersRoute {
         userId,
         {
           name: req.body.name,
-          email: req.body.email.toLowerCase(),
+          email: requestValidity.value.email,
           isManagement: req.body.isManagement,
         },
         { new: true }
@@ -76,22 +77,13 @@ export class UsersRoute {
     return await bcrypt.hash(password, salt);
   }
 
-  private validateCreateRequest(request: any) {
+  private validateRequest(create: boolean, request: any) {
     const schema = Joi.object({
       name: Joi.string().min(5).max(255).required(),
-      email: Joi.string().min(5).max(320).required().email(),
-      password: Joi.string().min(5).max(255).required(),
-      isManagement: Joi.bool(),
+      email: Joi.string().min(5).max(320).required().email().lowercase(),
+      isManagement: Joi.bool().optional(),
+      password: create ? Joi.string().min(5).max(255) : Joi.forbidden(),
     });
-    return schema.validate(request);
-  }
-
-  private validateUpdateRequest(request: any) {
-    const schema = Joi.object({
-      name: Joi.string().min(5).max(255).required(),
-      email: Joi.string().min(5).max(320).required().email(),
-      isManagement: Joi.bool(),
-    });
-    return schema.validate(request);
+    return schema.validate(request, { convert: true });
   }
 }
