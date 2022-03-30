@@ -3,7 +3,6 @@ import { User } from "../interfaces/user.interface";
 import userModel from "../models/user.model";
 import bcrypt from "bcryptjs";
 import Joi from "joi";
-import { join } from "path";
 
 export class UsersRoute {
   public path = "/api/users";

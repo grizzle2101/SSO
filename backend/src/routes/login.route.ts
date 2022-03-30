@@ -3,7 +3,6 @@ import userModel from "../models/user.model";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import Joi from "joi";
-import { request } from "http";
 
 export class LoginRoute {
   public path = "/api/login";
