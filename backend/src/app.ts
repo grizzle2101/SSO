@@ -1,6 +1,6 @@
 import express from "express";
 import { Routes } from "./interfaces/routes.interface";
-import { connectToMongoDB } from "./startup/db";
+import { connectToMongoDB, seedDatabase } from "./startup/db";
 import { logger } from "./startup/logger";
 import cors from "cors";
 
@@ -16,6 +16,7 @@ class App {
     this.port = process.env.PORT || 3000;
 
     this.connectToDatabase();
+    this.seedDatabase();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
   }
@@ -33,6 +34,10 @@ class App {
 
   private connectToDatabase() {
     connectToMongoDB();
+  }
+
+  private seedDatabase() {
+    seedDatabase();
   }
 
   private initializeMiddlewares() {
