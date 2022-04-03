@@ -16,8 +16,8 @@ export class LoginService {
     return this.http.post(this.url, userLogin);
   }
 
-  getLogins(): Observable<any> {
-    return this.http.get(this.url);
+  getLogins(): Observable<LogEntry[]> {
+    return this.http.get<LogEntry[]>(this.url);
   }
 }
 
@@ -28,7 +28,9 @@ export interface Login {
 
 export interface LogEntry {
   _id: string;
-  email: string;
+  user: {
+    email: string;
+  };
   timeStamp: Date;
   origin: string;
 }
