@@ -3,11 +3,13 @@ import userModel from "../models/user.model";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import Joi from "joi";
+import loginModel from "../models/login.model";
 
 export class LoginRoute {
   public path = "/api/login";
   public router = Router();
   public users = userModel;
+  public logins = loginModel;
   private privateKey = process.env.PRIVATE_KEY;
 
   constructor() {
@@ -15,6 +17,7 @@ export class LoginRoute {
   }
 
   private initializeRoutes() {
+    //Perform Login Action
     this.router.post(this.path, async (req, res) => {
       const requestValidity = this.validateRequest(req.body);
 
@@ -32,7 +35,19 @@ export class LoginRoute {
 
       const token = jwt.sign({ user }, this.privateKey);
 
-      res.send({ token });
+      const login = await this.logins.create({
+        user: user,
+        timeStamp: new Date(),
+        origin: "Ireland",
+      });
+
+      res.send({ login, token });
+    });
+
+    //GET Login Resources
+    this.router.get(this.path, async (req, res) => {
+      const logins = await this.logins.find();
+      res.send(logins);
     });
   }
   private validateRequest(request: any) {
