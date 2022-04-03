@@ -1,10 +1,11 @@
+import { string } from "joi";
 import { model, Schema, Document } from "mongoose";
 import { Login } from "../interfaces/login.interface";
-import { userSchema } from "./user.model";
 
 const loginSchema: Schema = new Schema({
   user: {
-    type: userSchema,
+    _id: { type: String, required: true },
+    email: { type: String, required: true },
   },
   timeStamp: {
     type: Date,

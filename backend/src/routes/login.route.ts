@@ -35,8 +35,9 @@ export class LoginRoute {
 
       const token = jwt.sign({ user }, this.privateKey);
 
+      console.log("user - ", user);
       const login = await this.logins.create({
-        user: user,
+        user: { _id: user._id, email: user.email },
         timeStamp: new Date(),
         origin: "Ireland",
       });
