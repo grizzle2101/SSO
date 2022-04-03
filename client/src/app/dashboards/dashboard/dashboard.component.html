@@ -1,1 +1,11 @@
-<p>dashboard works!</p>
+<h2>Live Activity:</h2>
+<div class="user-management-panel">
+  <mat-card *ngFor="let login of logins">
+    {{ login.timeStamp | date: "mediumDate" }}
+    <div class="log-entry">
+      <div>{{ login.timeStamp | date: "mediumTime" }}</div>
+      <div>{{ login.user.email }}</div>
+      <div>{{ login.origin }}</div>
+    </div>
+  </mat-card>
+</div>
