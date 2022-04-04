@@ -8,6 +8,9 @@ const dashboardTotalsSchema: Schema = new Schema({
   totalTokensIssued: {
     type: Number,
   },
+  totalFailures: {
+    type: Number,
+  },
 });
 
 const dashboardTotalsModel = model<DashboardTotals & Document>(

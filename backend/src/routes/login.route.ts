@@ -21,7 +21,6 @@ export class LoginRoute {
   }
 
   private initializeRoutes() {
-    //Login Action
     this.router.post(this.path, async (req, res) => {
       const { error } = this.validateRequest(req.body);
       if (error) return res.status(404).send(error.message);
@@ -30,15 +29,17 @@ export class LoginRoute {
         email: req.body.email,
       });
 
-      await this.checkUserAndPassword(user, req, res);
-      await this.updateLogs(user);
-
-      const token = jwt.sign({ user }, this.privateKey);
-
-      res.send({ token });
+      const userError = await this.checkUserAndPassword(user, req, res);
+      if (userError) {
+        this.logFailure();
+        return res.status(404).send(userError);
+      } else {
+        await this.updateLogs(user);
+        const token = jwt.sign({ user }, this.privateKey);
+        res.send({ token });
+      }
     });
 
-    //GET Logins
     this.router.get(this.path, async (req, res) => {
       const logins = await this.logins.find();
       res.send(logins);
@@ -46,15 +47,19 @@ export class LoginRoute {
   }
 
   private async checkUserAndPassword(user: User, req: Request, res: Response) {
-    if (!user) return res.status(404).send("Invalid email");
+    if (!user) return "Invalid email";
 
     const password = await bcrypt.compare(req.body.password, user.password);
-    if (!password) return res.status(404).send("Incorrect password");
+    if (!password) return "Incorrect password";
   }
 
   private updateLogs(user: User) {
     this.addLogEntry(user);
-    this.incrementTokens();
+    this.updateDashboard(1, 0, 0);
+  }
+
+  private logFailure() {
+    this.updateDashboard(0, 0, 1);
   }
   private async addLogEntry(user: User) {
     await this.logins.create({
@@ -63,10 +68,20 @@ export class LoginRoute {
       origin: "Ireland",
     });
   }
-  private async incrementTokens() {
+  private async updateDashboard(
+    totalTokensIssued: number = null,
+    totalUsers: number = null,
+    totalFailures: number = null
+  ) {
     await this.dashboardTotals.updateOne(
       {},
-      { $inc: { totalTokensIssued: 1, totalUsers: 0 } },
+      {
+        $inc: {
+          totalTokensIssued,
+          totalUsers,
+          totalFailures,
+        },
+      },
       { upsert: true }
     );
   }
