@@ -66,7 +66,7 @@ export class LoginRoute {
   private async incrementTokens() {
     await this.loginTotals.updateOne(
       {},
-      { $inc: { totalTokensIssued: 1 } },
+      { $inc: { totalTokensIssued: 1, totalUsers: 0 } },
       { upsert: true }
     );
   }
