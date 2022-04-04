@@ -30,10 +30,9 @@ export class LoginComponent implements OnInit {
       this.loginService.login(this.userLogin).subscribe({
         next: (result) => {
           if (
-            this.tokenHelper.getDecodedAccessToken(result.token)?.user
-              .isManagement
+            this.tokenHelper.getDecodedToken(result.token)?.user.isManagement
           ) {
-            this.storeToken(result.token);
+            this.tokenHelper.storeToken(result.token);
             this.routingService.navigateToHome();
           } else this.errorText = 'User is not a management user';
         },
@@ -50,9 +49,5 @@ export class LoginComponent implements OnInit {
           this.errorText = e.error;
         },
       });
-  }
-
-  storeToken(token: string) {
-    localStorage.setItem('token', token);
   }
 }

@@ -2,7 +2,7 @@ import jwt_decode from 'jwt-decode';
 
 export class TokenHelper {
   getToken() {
-    localStorage.getItem('token');
+    return localStorage.getItem('token');
   }
 
   storeToken(token: string) {
@@ -13,7 +13,7 @@ export class TokenHelper {
     localStorage.removeItem('token');
   }
 
-  getDecodedAccessToken(token: any): any {
+  getDecodedToken(token: any): any {
     try {
       return jwt_decode(token);
     } catch (Error) {
