@@ -11,8 +11,8 @@ export class DashboardService {
 
   private url = environment.apiEndpoint + '/dashboard';
 
-  getDashboardTotals(): Observable<DashboardTotals[]> {
-    return this.http.get<DashboardTotals[]>(this.url);
+  getDashboardTotals(): Observable<DashboardTotals> {
+    return this.http.get<DashboardTotals>(this.url);
   }
 }
 

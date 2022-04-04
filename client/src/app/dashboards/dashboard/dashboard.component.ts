@@ -14,6 +14,7 @@ import { LogEntry, LoginService } from 'src/app/services/login.service';
 export class DashboardComponent {
   logins: LogEntry[] = [];
   dashboardTotals: any;
+  isLoading: boolean = true;
 
   constructor(
     private loginService: LoginService,
@@ -25,6 +26,7 @@ export class DashboardComponent {
     }).subscribe((mergedData) => {
       this.logins = this.sortByDate(mergedData.logins);
       this.dashboardTotals = mergedData.dashboardTotals;
+      this.isLoading = false;
     });
   }
 

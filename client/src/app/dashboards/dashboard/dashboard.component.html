@@ -1,18 +1,18 @@
-<mat-card>
+<mat-card *ngIf="!isLoading">
   <h2>Dashboards</h2>
   <div class="dashboard">
     <div class="dashboard-banner">
       <div class="totals section">
-        <div>Tokens issued 1.2m</div>
-        <div>Total users 10k</div>
+        <div>Tokens issued - {{ dashboardTotals.totalTokensIssued }}</div>
+        <div>Total users - {{ dashboardTotals.totalUsers }}</div>
       </div>
       <div class="load section">
         <div>Daily Requets</div>
-        <div>443</div>
+        <div>N/A</div>
       </div>
       <div class="failures section">
         <div>Failure Rate</div>
-        <div>2%</div>
+        <div>N/A</div>
       </div>
     </div>
   </div>
