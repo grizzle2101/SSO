@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import {
+  DashboardService,
+  DashboardTotals,
+} from 'src/app/services/dashboard.service';
 import { LogEntry, LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -8,11 +13,19 @@ import { LogEntry, LoginService } from 'src/app/services/login.service';
 })
 export class DashboardComponent {
   logins: LogEntry[] = [];
+  dashboardTotals: any;
 
-  constructor(private loginService: LoginService) {
-    loginService
-      .getLogins()
-      .subscribe((logins) => (this.logins = this.sortByDate(logins)));
+  constructor(
+    private loginService: LoginService,
+    private dashboardService: DashboardService
+  ) {
+    forkJoin({
+      dashboardTotals: this.dashboardService.getDashboardTotals(),
+      logins: this.loginService.getLogins(),
+    }).subscribe((mergedData) => {
+      this.logins = this.sortByDate(mergedData.logins);
+      this.dashboardTotals = mergedData.dashboardTotals;
+    });
   }
 
   private sortByDate(logins: LogEntry[]): LogEntry[] {
