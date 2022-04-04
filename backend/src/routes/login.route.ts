@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import Joi from "joi";
 import userModel from "../models/user.model";
 import loginModel from "../models/login.model";
-import loginTotalModel from "../models/dashboard-totals.model";
+import dashboardTotalsModel from "../models/dashboard-totals.model";
 import { User } from "../interfaces/user.interface";
 
 export class LoginRoute {
@@ -13,7 +13,7 @@ export class LoginRoute {
   public router = Router();
   public users = userModel;
   public logins = loginModel;
-  public loginTotals = loginTotalModel;
+  public dashboardTotals = dashboardTotalsModel;
   private privateKey = process.env.PRIVATE_KEY;
 
   constructor() {
@@ -64,7 +64,7 @@ export class LoginRoute {
     });
   }
   private async incrementTokens() {
-    await this.loginTotals.updateOne(
+    await this.dashboardTotals.updateOne(
       {},
       { $inc: { totalTokensIssued: 1, totalUsers: 0 } },
       { upsert: true }

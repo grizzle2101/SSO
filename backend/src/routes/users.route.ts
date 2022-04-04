@@ -1,13 +1,15 @@
+import bcrypt from "bcryptjs";
+import Joi from "joi";
 import { Router } from "express";
 import { User } from "../interfaces/user.interface";
 import userModel from "../models/user.model";
-import bcrypt from "bcryptjs";
-import Joi from "joi";
+import dashboardTotalsModel from "../models/dashboard-totals.model";
 
 export class UsersRoute {
   public path = "/api/users";
   public router = Router();
   public users = userModel;
+  public dashboardTotals = dashboardTotalsModel;
 
   constructor() {
     this.initializeRoutes();
@@ -31,6 +33,8 @@ export class UsersRoute {
         password: saltedPassword,
         isManagement: req.body.isManagement,
       });
+
+      await this.updateUsersCount(1);
       res.send(result);
     });
 
@@ -67,8 +71,13 @@ export class UsersRoute {
     this.router.delete(`${this.path}/:id`, async (req, res) => {
       const userId: string = req.params.id;
       const user: User[] = await this.users.findByIdAndDelete(userId);
+      this.updateUsersCount(-1);
       res.send(user);
     });
+  }
+
+  private async updateUsersCount(value: number) {
+    await this.dashboardTotals.updateOne({}, { $inc: { totalUsers: value } });
   }
 
   private async saltPassword(password: string) {
