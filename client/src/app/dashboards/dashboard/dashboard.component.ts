@@ -30,6 +30,14 @@ export class DashboardComponent {
     });
   }
 
+  calculatePercentage(dashboardTotals: DashboardTotals) {
+    return Math.round(
+      (this.dashboardTotals.totalFailures /
+        this.dashboardTotals.totalTokensIssued) *
+        100
+    );
+  }
+
   private sortByDate(logins: LogEntry[]): LogEntry[] {
     return logins.sort((a: LogEntry, b: LogEntry) => {
       return +new Date(b.timeStamp) - +new Date(a.timeStamp);

@@ -55,7 +55,7 @@ export class LoginRoute {
 
   private updateLogs(user: User) {
     this.addLogEntry(user);
-    this.updateDashboard(1, 0, 0);
+    this.updateDashboard(1);
   }
 
   private logFailure() {
@@ -69,9 +69,9 @@ export class LoginRoute {
     });
   }
   private async updateDashboard(
-    totalTokensIssued: number = null,
-    totalUsers: number = null,
-    totalFailures: number = null
+    totalTokensIssued: number = 0,
+    totalUsers: number = 0,
+    totalFailures: number = 0
   ) {
     await this.dashboardTotals.updateOne(
       {},
