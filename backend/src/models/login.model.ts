@@ -1,4 +1,3 @@
-import { string } from "joi";
 import { model, Schema, Document } from "mongoose";
 import { Login } from "../interfaces/login.interface";
 

@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { Router } from "express";
-import userModel from "../models/user.model";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import Joi from "joi";
+import userModel from "../models/user.model";
 import loginModel from "../models/login.model";
+import loginTotalModel from "../models/login-totals.model";
 import { User } from "../interfaces/user.interface";
 
 export class LoginRoute {
@@ -12,6 +13,7 @@ export class LoginRoute {
   public router = Router();
   public users = userModel;
   public logins = loginModel;
+  public loginTotals = loginTotalModel;
   private privateKey = process.env.PRIVATE_KEY;
 
   constructor() {
@@ -52,17 +54,21 @@ export class LoginRoute {
 
   private updateLogs(user: User) {
     this.addLogEntry(user);
-    this.addToAggregates();
+    this.incrementTokens();
   }
   private async addLogEntry(user: User) {
-    const login = await this.logins.create({
+    await this.logins.create({
       user: { _id: user._id, email: user.email },
       timeStamp: new Date(),
       origin: "Ireland",
     });
   }
-  private addToAggregates() {
-    console.log("aggregating...");
+  private async incrementTokens() {
+    await this.loginTotals.updateOne(
+      {},
+      { $inc: { totalTokensIssued: 1 } },
+      { upsert: true }
+    );
   }
 
   private validateRequest(request: any) {
