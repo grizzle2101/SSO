@@ -10,9 +10,9 @@ const dashboardTotalsSchema: Schema = new Schema({
   },
 });
 
-const loginTotalsModel = model<DashboardTotals & Document>(
+const dashboardTotalsModel = model<DashboardTotals & Document>(
   "dashboard-totals",
   dashboardTotalsSchema
 );
 
-export default loginTotalsModel;
+export default dashboardTotalsModel;
