@@ -1,5 +1,5 @@
 <mat-card *ngIf="!isLoading">
-  <h2>Dashboards</h2>
+  <h2 class="centered">Dashboards</h2>
   <div class="dashboard">
     <div class="dashboard-banner">
       <div class="totals section">
@@ -18,7 +18,7 @@
   </div>
 </mat-card>
 <mat-divider vertical></mat-divider>
-<h2>Activity Feed</h2>
+<h2 class="centered">Activity Feed</h2>
 <div class="medium-panel">
   <mat-card *ngFor="let login of logins">
     {{ login.timeStamp | date: "mediumDate" }}
