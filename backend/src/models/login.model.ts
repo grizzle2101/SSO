@@ -16,6 +16,6 @@ const loginSchema: Schema = new Schema({
   },
 });
 
-const loginModel = model<Login & Document>("Login", loginSchema);
+const loginModel = model<Login & Document>("login", loginSchema);
 
 export default loginModel;

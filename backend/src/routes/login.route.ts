@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import Joi from "joi";
 import userModel from "../models/user.model";
 import loginModel from "../models/login.model";
-import loginTotalModel from "../models/login-totals.model";
+import loginTotalModel from "../models/dashboard-totals.model";
 import { User } from "../interfaces/user.interface";
 
 export class LoginRoute {
