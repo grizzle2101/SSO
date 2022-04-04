@@ -12,7 +12,11 @@
       </div>
       <div class="failures section">
         <div>Failure Rate</div>
-        <div>N/A</div>
+        <div>
+          {{
+            dashboardTotals.totalTokensIssued / dashboardTotals.totalFailures
+          }}%
+        </div>
       </div>
     </div>
   </div>

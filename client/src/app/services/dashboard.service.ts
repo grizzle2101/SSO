@@ -19,4 +19,5 @@ export class DashboardService {
 export interface DashboardTotals {
   totalUsers: number;
   totalTokensIssued: number;
+  totalFailures: number;
 }
