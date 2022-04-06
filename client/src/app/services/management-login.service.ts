@@ -2,21 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from './users.service';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LoginService {
-  constructor(protected http: HttpClient) {}
+export class ManagementLoginService extends LoginService {
+  constructor(_http: HttpClient) {
+    super(_http);
+    this.url = environment.apiEndpoint + '/management/login';
+  }
 
-  protected url = environment.apiEndpoint + '/login';
-
-  login(userLogin: Login): Observable<any> {
+  override login(userLogin: Login): Observable<any> {
     return this.http.post(this.url, userLogin);
   }
 
-  getLogins(): Observable<LogEntry[]> {
+  override getLogins(): Observable<LogEntry[]> {
     return this.http.get<LogEntry[]>(this.url);
   }
 }

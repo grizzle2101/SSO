@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import { set } from "mongoose";
 import { logger } from "./logger";
-import userModel from "../models/user.model";
+import managementUserModel from "../models/management-user.model";
 import { User } from "../interfaces/user.interface";
 import bcrypt from "bcryptjs";
 
-const users = userModel;
+const users = managementUserModel;
 
 export function connectToMongoDB() {
   const db = process.env.DB_URI;
@@ -29,7 +29,6 @@ export async function seedDatabase() {
     name: "admin",
     email: "admin@admin.com",
     password,
-    isManagement: true,
   };
 
   let result = await users.updateOne(

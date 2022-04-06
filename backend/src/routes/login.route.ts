@@ -20,7 +20,7 @@ export class LoginRoute {
     this.initializeRoutes();
   }
 
-  private initializeRoutes() {
+  protected initializeRoutes() {
     this.router.post(this.path, async (req, res) => {
       const { error } = this.validateRequest(req.body);
       if (error) return res.status(404).send(error.message);

@@ -15,10 +15,6 @@ export const userSchema: Schema = new Schema({
     type: String,
     required: true,
   },
-  isManagement: {
-    type: Boolean,
-    required: false,
-  },
 });
 
 const userModel = model<User & Document>("users", userSchema);
