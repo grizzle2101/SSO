@@ -26,7 +26,12 @@
         />
       </mat-form-field>
     </div>
+
     <div class="centered">
+      <div class="small-text">
+        Dont have an account?
+        <button mat-button (click)="createAccount()">Create one</button>
+      </div>
       <mat-error>{{ errorText }}</mat-error>
       <button mat-button>Cancel</button>
       <button mat-button (click)="login()">Login</button>

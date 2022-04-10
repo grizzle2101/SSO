@@ -13,6 +13,7 @@ import { TokenHelper } from './helpers/tokenHelper';
 import { MaterialModule } from './modules/material/material.module';
 import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
 import { DialogErrorStateMatcherModule } from './helpers/dialogErrorStateMatcherModule';
+import { EditUserComponent } from './user-management/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { DialogErrorStateMatcherModule } from './helpers/dialogErrorStateMatcher
     LoginComponent,
     RedirectComponent,
     DashboardComponent,
+    EditUserComponent,
   ],
   imports: [
     BrowserModule,

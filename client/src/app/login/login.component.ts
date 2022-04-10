@@ -32,6 +32,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  createAccount() {
+    console.log('clicked!');
+  }
+
   private handleSuccessResponse(result: any) {
     let token = this.tokenService.decodeToken(result.token);
     if (!token.user.isManagement && this.isManagementLogin) {

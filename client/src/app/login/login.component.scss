@@ -15,3 +15,10 @@ mat-form-field {
   width: 20rem;
   margin: auto;
 }
+
+.small-text {
+  font-size: small;
+  .mat-button {
+    display: contents;
+  }
+}
