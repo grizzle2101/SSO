@@ -1,7 +1,8 @@
+{{ tokenService.token?.user?.isManagement || "NAH" }}
 <ng-container>
   <mat-toolbar color="primary">
     <button
-      *ngIf="token"
+      *ngIf="tokenService.token?.user?.isManagement"
       (click)="sidenav.toggle()"
       mat-icon-button
       aria-label="Menu Label"

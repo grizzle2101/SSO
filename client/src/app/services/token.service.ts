@@ -1,6 +1,5 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { TokenHelper } from '../helpers/tokenHelper';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,19 +8,22 @@ export class TokenService {
   isAuthenticated = false;
   token: any;
 
-  constructor(private tokenHelper: TokenHelper) {}
-
-  storeToken(token: any) {
-    this.token = this.tokenHelper.getDecodedToken(token);
-    this.tokenHelper.storeToken(token);
+  constructor(private tokenHelper: TokenHelper) {
+    this.loadToken();
   }
 
-  getToken() {
-    if (this.token === undefined) {
-      let token = this.tokenHelper.getToken();
-      this.token = this.tokenHelper.getDecodedToken(token);
-    }
-    return this.token;
+  storeToken(token: any) {
+    this.tokenHelper.storeToken(token);
+    this.token = this.tokenHelper.getDecodedToken(token);
+  }
+
+  loadToken() {
+    let token = this.tokenHelper.getToken();
+    this.token = this.tokenHelper.getDecodedToken(token);
+  }
+  removeToken() {
+    this.tokenHelper.removeToken();
+    this.token = null;
   }
 
   decodeToken(token: any) {

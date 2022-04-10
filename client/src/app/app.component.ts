@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenHelper } from './helpers/tokenHelper';
+import { TokenService } from './services/token.service';
 import { RoutingService } from './services/routing.service';
 
 @Component({
@@ -9,15 +10,12 @@ import { RoutingService } from './services/routing.service';
 })
 export class AppComponent implements OnInit {
   title = 'client';
-  token: any;
 
   constructor(
     private routingService: RoutingService,
-    private tokenHelper: TokenHelper
+    public tokenService: TokenService
   ) {}
-  ngOnInit(): void {
-    this.token = this.tokenHelper.getDecodedToken(this.tokenHelper.getToken());
-  }
+  ngOnInit(): void {}
 
   sideNavLinks: Link[] = [
     { icon: 'dashboard', displayName: 'Dashboard', link: '/' },
@@ -33,8 +31,7 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    this.tokenHelper.removeToken();
-    this.token = null;
+    this.tokenService.removeToken();
     this.routingService.navigateToLogin();
   }
 }

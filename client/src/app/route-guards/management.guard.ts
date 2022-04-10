@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { RoutingService } from '../services/routing.service';
 import { TokenHelper } from '../helpers/tokenHelper';
+import { TokenService } from '../services/token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,8 @@ import { TokenHelper } from '../helpers/tokenHelper';
 export class ManagementGuard implements CanActivate {
   constructor(
     private routingService: RoutingService,
-    private tokenHelper: TokenHelper
+    private tokenHelper: TokenHelper,
+    private tokenService: TokenService
   ) {}
 
   canActivate(
@@ -26,11 +28,10 @@ export class ManagementGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    var token = this.tokenHelper.getToken();
-    const isManagement =
-      this.tokenHelper.getDecodedToken(token)?.user.isManagement;
+    const isManagement = this.tokenService.token?.user.isManagement;
 
     if (!isManagement) {
+      console.error('Non management user attempting login...');
       this.tokenHelper.removeToken();
       this.routingService.navigateToLogin();
     }
