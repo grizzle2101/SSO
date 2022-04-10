@@ -1,7 +1,7 @@
 import { model, Schema, Document } from "mongoose";
 import { User } from "../interfaces/user.interface";
 
-const userSchema: Schema = new Schema({
+export const userSchema: Schema = new Schema({
   name: {
     type: String,
     required: true,
@@ -21,6 +21,6 @@ const userSchema: Schema = new Schema({
   },
 });
 
-const userModel = model<User & Document>("User", userSchema);
+const userModel = model<User & Document>("users", userSchema);
 
 export default userModel;

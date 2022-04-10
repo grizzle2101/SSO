@@ -1,1 +1,31 @@
-<p>dashboard works!</p>
+<mat-card *ngIf="!isLoading">
+  <h2 class="centered">Dashboards</h2>
+  <div class="dashboard">
+    <div class="dashboard-banner">
+      <div class="totals section">
+        <div>Tokens issued - {{ dashboardTotals.totalTokensIssued }}</div>
+        <div>Total users - {{ dashboardTotals.totalUsers }}</div>
+      </div>
+      <div class="load section">
+        <div>Daily Requets</div>
+        <div>N/A</div>
+      </div>
+      <div class="failures section">
+        <div>Failure Rate</div>
+        <div>{{ calculatePercentage(dashboardTotals) }}%</div>
+      </div>
+    </div>
+  </div>
+</mat-card>
+<mat-divider vertical></mat-divider>
+<h2 class="centered">Activity Feed</h2>
+<div class="medium-panel">
+  <mat-card *ngFor="let login of logins">
+    {{ login.timeStamp | date: "mediumDate" }}
+    <div class="log-entry">
+      <div>{{ login.timeStamp | date: "mediumTime" }}</div>
+      <div>{{ login.user.email }}</div>
+      <div>{{ login.origin }}</div>
+    </div>
+  </mat-card>
+</div>
