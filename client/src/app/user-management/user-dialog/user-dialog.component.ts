@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogErrorStateMatcherModule } from '../helpers/dialogErrorStateMatcherModule';
-import { User } from '../services/users.service';
+import { DialogErrorStateMatcherModule } from '../../helpers/dialogErrorStateMatcherModule';
+import { User } from '../../services/users.service';
 
 @Component({
   selector: 'app-user-dialog',
