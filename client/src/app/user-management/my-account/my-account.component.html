@@ -3,7 +3,7 @@
 <div
   class="form-panel centered"
   [formGroup]="accountForm"
-  *ngIf="isEdit && !isLoading; else loading"
+  *ngIf="!isLoading; else loading"
 >
   <div>
     <mat-form-field appearance="fill">
@@ -62,4 +62,6 @@
   </div>
 </div>
 
-<ng-template #loading> Loading </ng-template>
+<ng-template #loading>
+  <mat-spinner class="spinner"></mat-spinner>
+</ng-template>

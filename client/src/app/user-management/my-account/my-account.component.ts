@@ -47,7 +47,7 @@ export class MyAccountComponent implements OnInit {
           this.populateForm(user);
           this.isLoading = false;
         });
-    }
+    } else this.isLoading = false;
   }
 
   private populateForm(user: User) {
