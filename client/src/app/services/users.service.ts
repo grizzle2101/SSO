@@ -32,8 +32,8 @@ export class UsersService {
 }
 
 export interface User {
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
   password?: string;
-  isManagement: boolean;
+  isManagement?: boolean;
 }

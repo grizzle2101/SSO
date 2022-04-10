@@ -14,7 +14,7 @@ export class MyAccountComponent implements OnInit {
   isLoading: boolean = true;
 
   accountForm = new FormGroup({
-    userName: new FormControl('', [
+    name: new FormControl('', [
       Validators.required,
       Validators.minLength(5),
       Validators.maxLength(255),
@@ -50,9 +50,42 @@ export class MyAccountComponent implements OnInit {
     } else this.isLoading = false;
   }
 
+  cancel() {
+    this.routingService.navigateToLogin();
+  }
+
+  createOrUpdate() {
+    let id = this.tokenService.token.user._id;
+    let formData = this.accountForm.getRawValue();
+    let passwordControl = this.accountForm.get('password');
+
+    let user: User = { email: formData.email, name: formData.name };
+
+    if (passwordControl?.dirty) {
+      user.password = passwordControl.value;
+    }
+
+    //update password only if changed, problem if we submit the untouched version, will get rehashed again.
+
+    console.log(user);
+
+    if (this.isEdit) {
+      console.log('edit');
+      this.userService.editUser(id, user).subscribe((updatedUser) => {
+        this.populateForm(updatedUser);
+      });
+    } else {
+      console.log('add');
+      let user: User = { email: formData.email, name: formData.name };
+      this.userService.addUser(user).subscribe((updatedUser) => {
+        this.populateForm(updatedUser); //hashed password in form
+      });
+    }
+  }
+
   private populateForm(user: User) {
     this.accountForm.patchValue({
-      userName: user.name,
+      name: user.name,
       email: user.email,
       password: user.password,
     });

@@ -8,14 +8,14 @@
   <div>
     <mat-form-field appearance="fill">
       <mat-label>Username</mat-label>
-      <input matInput formControlName="userName" required />
-      <mat-error *ngIf="accountForm.controls['userName'].hasError('required')"
+      <input matInput formControlName="name" required />
+      <mat-error *ngIf="accountForm.controls['name'].hasError('required')"
         >Name is required</mat-error
       >
-      <mat-error *ngIf="accountForm.controls['userName'].hasError('minlength')"
+      <mat-error *ngIf="accountForm.controls['name'].hasError('minlength')"
         >Name must be 5 chars long</mat-error
       >
-      <mat-error *ngIf="accountForm.controls['userName'].hasError('maxlength')"
+      <mat-error *ngIf="accountForm.controls['name'].hasError('maxlength')"
         >Name must be less than 255 chars</mat-error
       >
     </mat-form-field>
@@ -55,8 +55,8 @@
     </mat-form-field>
   </div>
   <div>
-    <button mat-button>Cancel</button>
-    <button mat-button [disabled]="false">
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-button (click)="createOrUpdate()">
       {{ isEdit ? "Update" : "Create" }}
     </button>
   </div>
