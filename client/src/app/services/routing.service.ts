@@ -33,6 +33,10 @@ export class RoutingService {
     return this.router.url.includes('management');
   }
 
+  searchUrl(searchTerm: string): boolean {
+    return this.router.url.includes(searchTerm);
+  }
+
   getToken(): string {
     return this.route.snapshot.queryParams['token'];
   }

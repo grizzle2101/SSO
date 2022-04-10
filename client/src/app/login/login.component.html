@@ -28,13 +28,13 @@
     </div>
 
     <div class="centered">
+      <mat-error>{{ errorText }}</mat-error>
       <div class="small-text">
         {{ loginDetails.text }}
-        <button mat-button (click)="createOrEditAccount(loginDetails.link)">
+        <button mat-button (click)="createOrEditAccount(loginDetails)">
           {{ loginDetails.button }}
         </button>
       </div>
-      <mat-error>{{ errorText }}</mat-error>
       <button mat-button>Cancel</button>
       <button mat-button (click)="login()">Login</button>
     </div>
