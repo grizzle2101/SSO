@@ -51,11 +51,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  createOrEditAccount(link: any) {
-    if (link.button === 'Edit') {
+  createOrEditAccount(navItem: any) {
+    if (navItem.button === 'Edit') {
       this.login(false);
     }
-    this.routingService.navigateToAccountPage(link);
+    this.routingService.navigateToAccountPage(navItem.link);
   }
 
   private handleSuccessResponse(result: any, isStandardLogin: boolean = true) {
