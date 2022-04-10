@@ -61,24 +61,18 @@ export class MyAccountComponent implements OnInit {
 
     let user: User = { email: formData.email, name: formData.name };
 
+    //DO NOT send already hashed password
     if (passwordControl?.dirty) {
       user.password = passwordControl.value;
     }
 
-    //update password only if changed, problem if we submit the untouched version, will get rehashed again.
-
-    console.log(user);
-
     if (this.isEdit) {
-      console.log('edit');
       this.userService.editUser(id, user).subscribe((updatedUser) => {
         this.populateForm(updatedUser);
       });
     } else {
-      console.log('add');
-      let user: User = { email: formData.email, name: formData.name };
       this.userService.addUser(user).subscribe((updatedUser) => {
-        this.populateForm(updatedUser); //hashed password in form
+        this.populateForm(updatedUser);
       });
     }
   }
