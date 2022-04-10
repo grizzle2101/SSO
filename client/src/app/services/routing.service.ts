@@ -19,6 +19,10 @@ export class RoutingService {
     this.router.navigateByUrl('management/login');
   }
 
+  navigateToAccountPage() {
+    this.router.navigateByUrl('my-account');
+  }
+
   navigateToRedirectPage(token: string) {
     this.router.navigate(['redirect'], {
       queryParams: { token },

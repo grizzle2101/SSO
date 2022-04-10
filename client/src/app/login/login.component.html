@@ -2,7 +2,7 @@
   <img src="../../assets/cubey quick.svg" class="left panel" />
   <mat-divider vertical></mat-divider>
   <div class="right panel">
-    <div class="login-form">
+    <div class="login-form" [formGroup]="loginForm">
       <div class="centered">
         <h1>{{ isManagementLogin ? "Management Login" : "Public Login" }}</h1>
       </div>
@@ -11,7 +11,7 @@
         <input
           matInput
           placeholder="Email"
-          [(ngModel)]="userLogin.email"
+          formControlName="email"
           (keyup.enter)="login()"
         />
       </mat-form-field>
@@ -21,7 +21,7 @@
           type="password"
           matInput
           placeholder="Password"
-          [(ngModel)]="userLogin.password"
+          formControlName="password"
           (keyup.enter)="login()"
         />
       </mat-form-field>
@@ -29,8 +29,10 @@
 
     <div class="centered">
       <div class="small-text">
-        Dont have an account?
-        <button mat-button (click)="createAccount()">Create one</button>
+        {{ loginDetails.text }}
+        <button mat-button (click)="createOrEditAccount(loginDetails.link)">
+          {{ loginDetails.button }}
+        </button>
       </div>
       <mat-error>{{ errorText }}</mat-error>
       <button mat-button>Cancel</button>
