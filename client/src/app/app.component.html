@@ -1,6 +1,11 @@
 <ng-container>
   <mat-toolbar color="primary">
-    <button (click)="sidenav.toggle()" mat-icon-button aria-label="Menu Label">
+    <button
+      *ngIf="token"
+      (click)="sidenav.toggle()"
+      mat-icon-button
+      aria-label="Menu Label"
+    >
       <mat-icon>menu</mat-icon>
     </button>
     <span>SSO</span>

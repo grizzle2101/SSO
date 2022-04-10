@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TokenHelper } from './helpers/tokenHelper';
 import { RoutingService } from './services/routing.service';
 
@@ -7,13 +7,17 @@ import { RoutingService } from './services/routing.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'client';
+  token: any;
 
   constructor(
     private routingService: RoutingService,
     private tokenHelper: TokenHelper
   ) {}
+  ngOnInit(): void {
+    this.token = this.tokenHelper.getDecodedToken(this.tokenHelper.getToken());
+  }
 
   sideNavLinks: Link[] = [
     { icon: 'dashboard', displayName: 'Dashboard', link: '/' },
@@ -30,6 +34,7 @@ export class AppComponent {
 
   logout() {
     this.tokenHelper.removeToken();
+    this.token = null;
     this.routingService.navigateToLogin();
   }
 }
