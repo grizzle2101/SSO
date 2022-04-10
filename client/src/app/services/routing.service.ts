@@ -19,8 +19,8 @@ export class RoutingService {
     this.router.navigateByUrl('management/login');
   }
 
-  navigateToAccountPage() {
-    this.router.navigateByUrl('my-account');
+  navigateToAccountPage(link: string) {
+    this.router.navigateByUrl(link);
   }
 
   navigateToRedirectPage(token: string) {

@@ -10,7 +10,8 @@ import { UserManagementPanelComponent } from './user-management/user-management-
 const routes: Routes = [
   { path: 'redirect', component: RedirectComponent },
   { path: 'public/login', component: LoginComponent },
-  { path: 'my-account', component: EditUserComponent },
+  { path: 'create-my-account', component: EditUserComponent },
+  { path: 'edit-my-account', component: EditUserComponent },
   { path: 'management/login', component: LoginComponent },
   {
     path: 'user-management',

@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   loginDetails = {
     text: 'Dont have an account?',
     button: 'Create one',
-    link: 'create-account',
+    link: 'create-my-account',
   };
   errorText!: String;
 
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
         this.loginDetails = {
           text: 'Update your Details?',
           button: 'Edit',
-          link: 'edit-account',
+          link: 'edit-my-account',
         };
       }
     });
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
   }
 
   createOrEditAccount(link: string) {
-    this.routingService.navigateToAccountPage();
+    this.routingService.navigateToAccountPage(link);
   }
 
   private handleSuccessResponse(result: any) {
