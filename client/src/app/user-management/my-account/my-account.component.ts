@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { RoutingService } from 'src/app/services/routing.service';
 import { TokenService } from 'src/app/services/token.service';
-import { UsersService } from 'src/app/services/users.service';
+import { User, UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-my-account',
@@ -41,8 +41,20 @@ export class MyAccountComponent implements OnInit {
     this.isEdit = this.routingService.searchUrl('edit');
 
     if (this.isEdit) {
-      //use token to load a user...
-      //pt only navigate on successful authentiction
+      this.userService
+        .getUser(this.tokenService.token.user._id)
+        .subscribe((user) => {
+          this.populateForm(user);
+          this.isLoading = false;
+        });
     }
+  }
+
+  private populateForm(user: User) {
+    this.accountForm.patchValue({
+      userName: user.name,
+      email: user.email,
+      password: user.password,
+    });
   }
 }
