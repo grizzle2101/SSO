@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TokenHelper } from './helpers/tokenHelper';
 import { TokenService } from './services/token.service';
 import { RoutingService } from './services/routing.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ import { RoutingService } from './services/routing.service';
 })
 export class AppComponent implements OnInit {
   title = 'client';
+  @ViewChild('sidenav') sidenav!: MatSidenav;
 
   constructor(
     private routingService: RoutingService,
@@ -30,7 +32,12 @@ export class AppComponent implements OnInit {
     this.routingService.navigateToLink(link);
   }
 
+  closeSidenav(): void {
+    this.sidenav.close();
+  }
+
   logout() {
+    this.closeSidenav();
     this.tokenService.removeToken();
     this.routingService.navigateToLogin();
   }

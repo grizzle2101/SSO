@@ -1,8 +1,7 @@
-{{ tokenService.token?.user?.isManagement || "NAH" }}
 <ng-container>
   <mat-toolbar color="primary">
     <button
-      *ngIf="tokenService.token?.user?.isManagement"
+      *ngIf="tokenService.isManagement"
       (click)="sidenav.toggle()"
       mat-icon-button
       aria-label="Menu Label"
@@ -13,7 +12,12 @@
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav mode="side" class="sidenav">
+    <mat-sidenav
+      #sidenav
+      opened="tokenService.isManagement"
+      mode="side"
+      class="sidenav"
+    >
       <mat-selection-list [multiple]="false">
         <mat-list-option *ngFor="let navLink of sideNavLinks" [value]="navLink">
           <div class="nav-link" (click)="navigate(navLink.link)">

@@ -5,7 +5,7 @@ import { TokenHelper } from '../helpers/tokenHelper';
   providedIn: 'root',
 })
 export class TokenService {
-  isAuthenticated = false;
+  isManagement = false;
   token: any;
 
   constructor(private tokenHelper: TokenHelper) {
@@ -15,14 +15,17 @@ export class TokenService {
   storeToken(token: any) {
     this.tokenHelper.storeToken(token);
     this.token = this.tokenHelper.getDecodedToken(token);
+    this.isManagement = this.token?.user?.isManagement;
   }
 
   loadToken() {
     let token = this.tokenHelper.getToken();
     this.token = this.tokenHelper.getDecodedToken(token);
+    this.isManagement = this.token?.user?.isManagement;
   }
   removeToken() {
     this.tokenHelper.removeToken();
+    this.isManagement = false;
     this.token = null;
   }
 
