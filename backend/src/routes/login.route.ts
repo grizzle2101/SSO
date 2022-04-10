@@ -22,14 +22,14 @@ export class LoginRoute {
 
   private initializeRoutes() {
     this.router.post(this.path, async (req, res) => {
-      const { error } = this.validateRequest(req.body);
+      const { error, value: validatedRequest } = this.validateRequest(req.body);
       if (error) return res.status(404).send(error.message);
 
       const user = await this.users.findOne({
-        email: req.body.email,
+        email: validatedRequest.email,
       });
 
-      const userError = await this.checkUserAndPassword(user, req, res);
+      const userError = await this.checkUserAndPassword(user, validatedRequest);
       if (userError) {
         this.logFailure();
         return res.status(404).send(userError);
@@ -46,10 +46,10 @@ export class LoginRoute {
     });
   }
 
-  private async checkUserAndPassword(user: User, req: Request, res: Response) {
+  private async checkUserAndPassword(user: User, req: any) {
     if (!user) return "Invalid email";
 
-    const password = await bcrypt.compare(req.body.password, user.password);
+    const password = await bcrypt.compare(req.password, user.password);
     if (!password) return "Incorrect password";
   }
 
