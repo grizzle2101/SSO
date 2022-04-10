@@ -58,12 +58,15 @@ export class LoginComponent implements OnInit {
     this.routingService.navigateToAccountPage(navItem.link);
   }
 
-  private handleSuccessResponse(result: any, isStandardLogin: boolean = true) {
+  private async handleSuccessResponse(
+    result: any,
+    isStandardLogin: boolean = true
+  ) {
     let token = this.tokenService.decodeToken(result.token);
-    if (!token.user.isManagement && this.isManagementLogin) {
+    if (this.isManagementLogin && isStandardLogin && !token.user.isManagement) {
       this.errorText = 'User is not a management user';
     } else {
-      this.tokenService.storeToken(result.token);
+      await this.tokenService.storeToken(result.token);
 
       isStandardLogin
         ? this.routingService.navigateToHome()
