@@ -1,93 +1,61 @@
 <h1>{{ isEdit ? "Update" : "Create" }} Account</h1>
-<!--
-<div class="form-panel" mat-dialog-content>
+{{ tokenService.token | json }}
 
-  <mat-form-field appearance="fill">
-    <mat-label>Username</mat-label>
-    <input
-      matInput
-      [(ngModel)]="data.user.name"
-      [formControl]="nameFormControls"
-      [errorStateMatcher]="matcher"
-      required
-    />
-    <mat-error *ngIf="nameFormControls.hasError('required')"
-      >Name is required</mat-error
-    >
-    <mat-error *ngIf="nameFormControls.hasError('minlength')"
-      >Name must be 5 chars long</mat-error
-    >
-    <mat-error *ngIf="nameFormControls.hasError('maxlength')"
-      >Name must be less than 255 chars</mat-error
-    >
-  </mat-form-field>
+<div class="form-panel" [formGroup]="accountForm">
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="userName" required />
+      <mat-error *ngIf="accountForm.controls['userName'].hasError('required')"
+        >Name is required</mat-error
+      >
+      <mat-error *ngIf="accountForm.controls['userName'].hasError('minlength')"
+        >Name must be 5 chars long</mat-error
+      >
+      <mat-error *ngIf="accountForm.controls['userName'].hasError('maxlength')"
+        >Name must be less than 255 chars</mat-error
+      >
+    </mat-form-field>
+  </div>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Email</mat-label>
-    <input
-      matInput
-      [(ngModel)]="data.user.email"
-      [formControl]="emailFormControls"
-      [errorStateMatcher]="matcher"
-    />
-    <mat-error *ngIf="emailFormControls.hasError('required')"
-      >Email is required</mat-error
-    >
-    <mat-error *ngIf="emailFormControls.hasError('minlength')"
-      >Email must be 5 chars long</mat-error
-    >
-    <mat-error *ngIf="emailFormControls.hasError('maxlength')"
-      >Email must be less than 320 chars</mat-error
-    >
-    <mat-error *ngIf="emailFormControls.hasError('email')"
-      >Email must be valid</mat-error
-    >
-  </mat-form-field>
-
-  <mat-form-field appearance="fill" *ngIf="!data.editMode">
-    <mat-label>Password</mat-label>
-    <input
-      matInput
-      type="password"
-      [(ngModel)]="data.user.password"
-      [formControl]="passwordFormControls"
-      [errorStateMatcher]="matcher"
-    />
-    <mat-error *ngIf="passwordFormControls.hasError('required')"
-      >Password is required</mat-error
-    >
-    <mat-error *ngIf="passwordFormControls.hasError('minlength')"
-      >Password must be 5 chars long</mat-error
-    >
-    <mat-error *ngIf="passwordFormControls.hasError('maxlength')"
-      >Password must be less than 255 chars</mat-error
-    >
-  </mat-form-field>
-
-  <mat-checkbox
-    (change)="setIsManagement($event.checked)"
-    [(ngModel)]="data.user.isManagement"
-  >
-    Management Access
-  </mat-checkbox>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+      <mat-error *ngIf="accountForm.controls['email'].hasError('required')"
+        >Email is required</mat-error
+      >
+      <mat-error *ngIf="accountForm.controls['email'].hasError('minlength')"
+        >Email must be 5 chars long</mat-error
+      >
+      <mat-error *ngIf="accountForm.controls['email'].hasError('maxlength')"
+        >Email must be less than 320 chars</mat-error
+      >
+      <mat-error *ngIf="accountForm.controls['email'].hasError('email')"
+        >Email must be valid</mat-error
+      >
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" />
+      <mat-error *ngIf="accountForm.controls['password'].hasError('required')"
+        >Password is required</mat-error
+      >
+      <mat-error *ngIf="accountForm.controls['password'].hasError('minlength')"
+        >Password must be 5 chars long</mat-error
+      >
+      <mat-error *ngIf="accountForm.controls['password'].hasError('maxlength')"
+        >Password must be less than 255 chars</mat-error
+      >
+    </mat-form-field>
+  </div>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button
-    mat-button
-    [mat-dialog-close]="data"
-    cdkFocusInitial
-    [disabled]="
-      !data.editMode
-        ? !(
-            nameFormControls.valid &&
-            emailFormControls.valid &&
-            passwordFormControls.valid
-          )
-        : !(nameFormControls.valid && emailFormControls.valid)
-    "
-  >
-    {{ data.editMode ? "Update" : "Create" }}
+
+<div>
+  <button mat-button>Cancel</button>
+  <button mat-button [disabled]="false">
+    {{ isEdit ? "Update" : "Create" }}
   </button>
 </div>
--->
