@@ -14,7 +14,7 @@
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav
       #sidenav
-      opened="tokenService.isManagement"
+      [opened]="tokenService.isManagement"
       mode="side"
       class="sidenav"
     >
