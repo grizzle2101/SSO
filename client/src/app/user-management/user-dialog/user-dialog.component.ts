@@ -13,7 +13,9 @@ export class UserDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<UserDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: UserDialogData
-  ) {}
+  ) {
+    if (!data.editMode) this.data.user.isManagement = false;
+  }
 
   setIsManagement(toggle: boolean) {
     this.data.user.isManagement = toggle;
