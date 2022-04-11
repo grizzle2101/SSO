@@ -36,7 +36,9 @@
         </button>
       </div>
       <button mat-button>Cancel</button>
-      <button mat-button (click)="login()">Login</button>
+      <button mat-button (click)="login()">
+        {{ isManagementLogin ? "Login" : "Authenticate" }}
+      </button>
     </div>
   </div>
 </div>

@@ -45,10 +45,14 @@ export class LoginComponent implements OnInit {
   login(isStandardLogin: any = true) {
     this.errorText = '';
 
-    this.loginService.login(this.loginForm.value).subscribe({
-      next: (result) => this.handleSuccessResponse(result, isStandardLogin),
-      error: ({ error }) => (this.errorText = error),
-    });
+    if (this.isManagementLogin || isStandardLogin === false) {
+      this.loginService.login(this.loginForm.value).subscribe({
+        next: (result) => this.handleSuccessResponse(result, isStandardLogin),
+        error: ({ error }) => (this.errorText = error),
+      });
+    } else {
+      this.routingService.navigateToRedirectPage('sample-token');
+    }
   }
 
   createOrEditAccount(navItem: any) {
