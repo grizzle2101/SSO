@@ -54,8 +54,7 @@ export class LoginComponent implements OnInit {
   createOrEditAccount(navItem: any) {
     if (navItem.button === 'Edit') {
       this.login(false);
-    }
-    this.routingService.navigateToAccountPage(navItem.link);
+    } else this.routingService.navigateToAccountPage(navItem.link);
   }
 
   private async handleSuccessResponse(
