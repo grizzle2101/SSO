@@ -51,8 +51,8 @@ export class MyAccountComponent implements OnInit {
   }
 
   cancel() {
+    this.routingService.navigateToLogin(this.tokenService.isManagement);
     this.tokenService.removeToken();
-    this.routingService.navigateToLogin();
   }
 
   createOrUpdate() {

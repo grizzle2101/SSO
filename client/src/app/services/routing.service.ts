@@ -15,8 +15,9 @@ export class RoutingService {
     this.router.navigateByUrl('/');
   }
 
-  navigateToLogin() {
-    this.router.navigateByUrl('management/login');
+  navigateToLogin(isManagement: boolean = true) {
+    let loginUrl = isManagement ? 'management/login' : 'public/login';
+    this.router.navigateByUrl(loginUrl);
   }
 
   navigateToAccountPage(link: string) {
