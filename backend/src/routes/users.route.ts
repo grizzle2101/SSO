@@ -58,7 +58,10 @@ export class UsersRoute {
 
       const userId: string = req.params.id;
 
-      const saltedPassword = await this.saltPassword(req.body.password);
+      let saltedPassword;
+      if (req.body.password) {
+        saltedPassword = await this.saltPassword(req.body.password);
+      }
 
       const user: User[] = await this.users.findByIdAndUpdate(
         userId,
