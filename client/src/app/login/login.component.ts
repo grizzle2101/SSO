@@ -37,7 +37,40 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  createButton(isCreate: boolean = false, isManagement: boolean = false) {
+  createOrEditAccount(login: ActionButton) {
+    login.action === 'create'
+      ? this.routingService.navigateToAccountPage(login.link) //no login needed
+      : this.requestLogin(login);
+  }
+
+  login() {
+    this.requestLogin(defaultButton);
+  }
+
+  private requestLogin(login: ActionButton) {
+    this.loginService.login(this.loginForm.value).subscribe({
+      next: (result) => {
+        let token = this.tokenService.decodeToken(result.token);
+
+        if (this.isManagementLogin && !token.user.isManagement) {
+          this.errorText = 'User is not a management user';
+          return;
+        }
+
+        this.tokenService.storeToken(result.token);
+
+        login.action === 'login'
+          ? this.routingService.navigateToHome()
+          : this.routingService.navigateToLink(login.link);
+      },
+      error: ({ error }) => (this.errorText = error),
+    });
+  }
+
+  private createButton(
+    isCreate: boolean = false,
+    isManagement: boolean = false
+  ) {
     let button: ActionButton = {
       text: isCreate ? 'Dont have an account?' : 'Update your Details?',
       button: isCreate ? 'Create one' : 'Edit',
@@ -50,46 +83,16 @@ export class LoginComponent implements OnInit {
     }
     return button;
   }
-
-  login(isStandardLogin: any = true) {
-    this.errorText = '';
-
-    if (this.isManagementLogin || isStandardLogin === false) {
-      this.loginService.login(this.loginForm.value).subscribe({
-        next: (result) => this.handleSuccessResponse(result, isStandardLogin),
-        error: ({ error }) => (this.errorText = error),
-      });
-    } else {
-      this.routingService.navigateToRedirectPage('sample-token');
-    }
-  }
-
-  createOrEditAccount(navItem: any) {
-    if (navItem.button === 'Edit') {
-      this.login(false);
-    } else this.routingService.navigateToAccountPage(navItem.link);
-  }
-
-  private async handleSuccessResponse(
-    result: any,
-    isStandardLogin: boolean = true
-  ) {
-    let token = this.tokenService.decodeToken(result.token);
-    if (this.isManagementLogin && isStandardLogin && !token.user.isManagement) {
-      this.errorText = 'User is not a management user';
-    } else {
-      await this.tokenService.storeToken(result.token);
-
-      isStandardLogin
-        ? this.routingService.navigateToHome()
-        : this.routingService.navigateToAccountPage('edit-my-account');
-    }
-  }
 }
 
 export interface ActionButton {
-  text: string;
-  button: string;
+  text?: string;
+  button?: string;
   link: string;
   action: string;
 }
+
+export const defaultButton: ActionButton = {
+  action: 'login',
+  link: 'default-link',
+};
