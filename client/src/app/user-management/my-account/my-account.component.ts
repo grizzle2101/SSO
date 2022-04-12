@@ -53,7 +53,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   cancel() {
-    this.routingService.navigateToLogin(this.tokenService.isManagement);
+    this.routingService.navigateToLogin(this.isManagement);
     this.tokenService.removeToken();
   }
 
