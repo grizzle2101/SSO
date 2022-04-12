@@ -11,7 +11,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   isManagementLogin: boolean = false;
-  loginDetails: any = null;
+  loginDetails!: ActionButton;
   errorText!: String;
 
   loginForm = new FormGroup({
@@ -28,21 +28,27 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.isManagementLogin = this.routingService.isManagementLogin();
 
-    this.loginDetails = {
-      text: 'Dont have an account?',
-      button: this.isManagementLogin ? 'Apply' : 'Create one',
-      link: 'create-my-account',
-    };
+    this.loginDetails = this.createButton(true, this.isManagementLogin);
 
     this.loginForm.valueChanges.subscribe((form) => {
       if (form.email && form.password) {
-        this.loginDetails = {
-          text: 'Update your Details?',
-          button: 'Edit',
-          link: 'edit-my-account',
-        };
+        this.loginDetails = this.createButton(false, this.isManagementLogin);
       }
     });
+  }
+
+  createButton(isCreate: boolean = false, isManagement: boolean = false) {
+    let button: ActionButton = {
+      text: isCreate ? 'Dont have an account?' : 'Update your Details?',
+      button: isCreate ? 'Create one' : 'Edit',
+      link: isCreate ? 'create-my-account' : 'edit-my-account',
+      action: isCreate ? 'create' : 'edit',
+    };
+
+    if (isManagement && isCreate) {
+      button.button = 'Apply';
+    }
+    return button;
   }
 
   login(isStandardLogin: any = true) {
@@ -79,4 +85,11 @@ export class LoginComponent implements OnInit {
         : this.routingService.navigateToAccountPage('edit-my-account');
     }
   }
+}
+
+export interface ActionButton {
+  text: string;
+  button: string;
+  link: string;
+  action: string;
 }
