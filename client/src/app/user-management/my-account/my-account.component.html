@@ -59,7 +59,11 @@
   </div>
   <div>
     <button mat-button (click)="cancel()">Cancel</button>
-    <button mat-button (click)="createOrUpdate()">
+    <button
+      [disabled]="!accountForm.touched || accountForm.invalid"
+      mat-button
+      (click)="createOrUpdate()"
+    >
       {{ isEdit ? "Update" : "Create" }}
     </button>
   </div>
