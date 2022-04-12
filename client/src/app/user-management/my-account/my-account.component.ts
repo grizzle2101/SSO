@@ -12,6 +12,7 @@ import { User, UsersService } from 'src/app/services/users.service';
 export class MyAccountComponent implements OnInit {
   isEdit: boolean = false;
   isLoading: boolean = true;
+  isManagement: boolean = false;
   tokenId!: string;
 
   accountForm = new FormGroup({
@@ -40,6 +41,7 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.isEdit = this.routingService.searchUrl('edit');
+    this.isManagement = this.routingService.searchUrl('management');
 
     if (this.isEdit) {
       this.tokenId = this.tokenService.token.user._id;
