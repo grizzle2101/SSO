@@ -1,4 +1,7 @@
-<h1>{{ isEdit ? "Update" : "Create" }} Account</h1>
+<h1>
+  {{ isEdit ? "Update" : "Create" }}
+  {{ this.tokenService.isManagement ? "anagment" : "user" }} account
+</h1>
 
 <div
   class="form-panel centered"
