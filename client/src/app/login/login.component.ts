@@ -11,11 +11,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   isManagementLogin: boolean = false;
-  loginDetails = {
-    text: 'Dont have an account?',
-    button: 'Create one',
-    link: 'create-my-account',
-  };
+  loginDetails: any = null;
   errorText!: String;
 
   loginForm = new FormGroup({
@@ -31,6 +27,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.isManagementLogin = this.routingService.isManagementLogin();
+
+    this.loginDetails = {
+      text: 'Dont have an account?',
+      button: this.isManagementLogin ? 'Apply' : 'Create one',
+      link: 'create-my-account',
+    };
+
     this.loginForm.valueChanges.subscribe((form) => {
       if (form.email && form.password) {
         this.loginDetails = {
