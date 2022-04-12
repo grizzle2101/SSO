@@ -12,6 +12,7 @@ import { User, UsersService } from 'src/app/services/users.service';
 export class MyAccountComponent implements OnInit {
   isEdit: boolean = false;
   isLoading: boolean = true;
+  tokenId!: string;
 
   accountForm = new FormGroup({
     name: new FormControl('', [
@@ -41,12 +42,11 @@ export class MyAccountComponent implements OnInit {
     this.isEdit = this.routingService.searchUrl('edit');
 
     if (this.isEdit) {
-      this.userService
-        .getUser(this.tokenService.token.user._id)
-        .subscribe((user) => {
-          this.populateForm(user);
-          this.isLoading = false;
-        });
+      this.tokenId = this.tokenService.token.user._id;
+      this.userService.getUser(this.tokenId).subscribe((user) => {
+        this.populateForm(user);
+        this.isLoading = false;
+      });
     } else this.isLoading = false;
   }
 
@@ -56,7 +56,6 @@ export class MyAccountComponent implements OnInit {
   }
 
   createOrUpdate() {
-    let id = this.tokenService.token.user._id;
     let formData = this.accountForm.getRawValue();
     let passwordControl = this.accountForm.get('password');
 
@@ -68,7 +67,7 @@ export class MyAccountComponent implements OnInit {
     }
 
     if (this.isEdit) {
-      this.userService.editUser(id, user).subscribe((updatedUser) => {
+      this.userService.editUser(this.tokenId, user).subscribe((updatedUser) => {
         this.populateForm(updatedUser);
       });
     } else {
