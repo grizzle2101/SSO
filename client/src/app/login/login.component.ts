@@ -43,17 +43,22 @@ export class LoginComponent implements OnInit {
       : this.requestLogin(login);
   }
 
-  login() {
-    this.requestLogin(defaultButton);
+  login(isExternal: boolean = false) {
+    this.requestLogin(defaultButton, isExternal);
   }
 
-  private requestLogin(login: ActionButton) {
+  private requestLogin(login: ActionButton, isExternal: boolean = false) {
     this.loginService.login(this.loginForm.value).subscribe({
       next: (result) => {
         let token = this.tokenService.decodeToken(result.token);
 
         if (this.isManagementLogin && !token.user.isManagement) {
           this.errorText = 'User is not a management user';
+          return;
+        }
+
+        if (isExternal) {
+          this.routingService.navigateToRedirectPage('sample-token');
           return;
         }
 
