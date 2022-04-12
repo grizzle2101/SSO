@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Login, LoginService } from '../services/login.service';
+import { LoginService } from '../services/login.service';
 import { TokenService } from '../services/token.service';
 import { RoutingService } from '../services/routing.service';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -78,9 +78,9 @@ export class LoginComponent implements OnInit {
       action: isCreate ? 'create' : 'edit',
     };
 
-    if (isManagement && isCreate) {
-      button.button = 'Apply';
-    }
+    button.link = (isManagement ? 'management/' : 'public/') + button.link;
+    if (isManagement && isCreate) button.button = 'Apply';
+
     return button;
   }
 }
