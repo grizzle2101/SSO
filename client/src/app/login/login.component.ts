@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TokenHelper } from '../helpers/tokenHelper';
-import { Login, LoginService } from '../services/login.service';
+import { LoginService } from '../services/login.service';
+import { TokenService } from '../services/token.service';
 import { RoutingService } from '../services/routing.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,44 +11,93 @@ import { RoutingService } from '../services/routing.service';
 })
 export class LoginComponent implements OnInit {
   isManagementLogin: boolean = false;
-  errorText: String = '';
-  public userLogin: Login = { email: '', password: '' };
+  loginDetails!: ActionButton;
+  errorText!: String;
+
+  loginForm = new FormGroup({
+    email: new FormControl(''),
+    password: new FormControl(''),
+  });
 
   constructor(
     private loginService: LoginService,
     private routingService: RoutingService,
-    private tokenHelper: TokenHelper
+    private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
     this.isManagementLogin = this.routingService.isManagementLogin();
+
+    this.loginDetails = this.createButton(true, this.isManagementLogin);
+
+    this.loginForm.valueChanges.subscribe((form) => {
+      if (form.email && form.password) {
+        this.loginDetails = this.createButton(false, this.isManagementLogin);
+      }
+    });
   }
 
-  login() {
-    this.errorText = '';
+  createOrEditAccount(login: ActionButton) {
+    login.action === 'create'
+      ? this.routingService.navigateToAccountPage(login.link) //no login needed
+      : this.requestLogin(login);
+  }
 
-    if (this.isManagementLogin)
-      this.loginService.login(this.userLogin).subscribe({
-        next: (result) => {
-          if (
-            this.tokenHelper.getDecodedToken(result.token)?.user.isManagement
-          ) {
-            this.tokenHelper.storeToken(result.token);
-            this.routingService.navigateToHome();
-          } else this.errorText = 'User is not a management user';
-        },
-        error: (e) => {
-          this.errorText = e.error;
-        },
-      });
-    else
-      this.loginService.login(this.userLogin).subscribe({
-        next: (result) => {
-          this.routingService.navigateToRedirectPage(result.token);
-        },
-        error: (e) => {
-          this.errorText = e.error;
-        },
-      });
+  login(isExternal: boolean = false) {
+    this.requestLogin(defaultButton, isExternal);
+  }
+
+  private requestLogin(login: ActionButton, isExternal: boolean = false) {
+    this.loginService.login(this.loginForm.value).subscribe({
+      next: (result) => {
+        let token = this.tokenService.decodeToken(result.token);
+
+        if (this.isManagementLogin && !token.user.isManagement) {
+          this.errorText = 'User is not a management user';
+          return;
+        }
+
+        if (isExternal) {
+          this.routingService.navigateToRedirectPage('sample-token');
+          return;
+        }
+
+        this.tokenService.storeToken(result.token);
+
+        login.action === 'login'
+          ? this.routingService.navigateToHome()
+          : this.routingService.navigateToLink(login.link);
+      },
+      error: ({ error }) => (this.errorText = error),
+    });
+  }
+
+  private createButton(
+    isCreate: boolean = false,
+    isManagement: boolean = false
+  ) {
+    let button: ActionButton = {
+      text: isCreate ? 'Dont have an account?' : 'Update your Details?',
+      button: isCreate ? 'Create one' : 'Edit',
+      link: isCreate ? 'create-my-account' : 'edit-my-account',
+      action: isCreate ? 'create' : 'edit',
+    };
+
+    button.link = (isManagement ? 'management/' : 'public/') + button.link;
+    if (isManagement && isCreate) button.button = 'Apply';
+
+    return button;
   }
 }
+
+export interface ActionButton {
+  text?: string;
+  button?: string;
+  link: string;
+  action: string;
+}
+
+export const defaultButton: ActionButton = {
+  action: 'login',
+  link: 'default-link',
+};

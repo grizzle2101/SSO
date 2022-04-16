@@ -4,12 +4,17 @@ import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { RedirectComponent } from './redirect/redirect.component';
 import { ManagementGuard } from './route-guards/management.guard';
-import { UserManagementPanelComponent } from './user-management-panel/user-management-panel.component';
+import { MyAccountComponent } from './user-management/my-account/my-account.component';
+import { UserManagementPanelComponent } from './user-management/user-management-panel/user-management-panel.component';
 
 const routes: Routes = [
   { path: 'redirect', component: RedirectComponent },
   { path: 'public/login', component: LoginComponent },
+  { path: 'public/create-my-account', component: MyAccountComponent },
+  { path: 'public/edit-my-account', component: MyAccountComponent },
   { path: 'management/login', component: LoginComponent },
+  { path: 'management/create-my-account', component: MyAccountComponent },
+  { path: 'management/edit-my-account', component: MyAccountComponent },
   {
     path: 'user-management',
     component: UserManagementPanelComponent,

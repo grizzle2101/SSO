@@ -10,6 +10,9 @@ export class UsersService {
   constructor(private http: HttpClient) {}
 
   private url = environment.apiEndpoint + '/users';
+  getUser(id: string): Observable<any> {
+    return this.http.get(`${this.url}/${id}`);
+  }
 
   getUsers(): Observable<any> {
     return this.http.get(this.url);
@@ -29,8 +32,8 @@ export class UsersService {
 }
 
 export interface User {
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
   password?: string;
-  isManagement: boolean;
+  isManagement?: boolean;
 }

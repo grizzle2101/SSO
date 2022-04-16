@@ -15,8 +15,13 @@ export class RoutingService {
     this.router.navigateByUrl('/');
   }
 
-  navigateToLogin() {
-    this.router.navigateByUrl('management/login');
+  navigateToLogin(isManagement: boolean = true) {
+    let loginUrl = isManagement ? 'management/login' : 'public/login';
+    this.router.navigateByUrl(loginUrl);
+  }
+
+  navigateToAccountPage(link: string) {
+    this.router.navigateByUrl(link);
   }
 
   navigateToRedirectPage(token: string) {
@@ -27,6 +32,10 @@ export class RoutingService {
 
   isManagementLogin(): boolean {
     return this.router.url.includes('management');
+  }
+
+  searchUrl(searchTerm: string): boolean {
+    return this.router.url.includes(searchTerm);
   }
 
   getToken(): string {

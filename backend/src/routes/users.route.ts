@@ -17,7 +17,8 @@ export class UsersRoute {
 
   private initializeRoutes() {
     this.router.post(this.path, async (req, res) => {
-      const requestValidity = this.validateRequest(true, req.body);
+      const requestValidity = this.validateRequest(req.body);
+
       if (requestValidity.error)
         return res.status(404).send(requestValidity.error.message);
 
@@ -29,7 +30,7 @@ export class UsersRoute {
 
       const result = await this.users.create({
         name: req.body.name,
-        email: requestValidity.value.email,
+        email: req.body.email,
         password: saltedPassword,
         isManagement: req.body.isManagement,
       });
@@ -50,16 +51,24 @@ export class UsersRoute {
     });
 
     this.router.put(`${this.path}/:id`, async (req, res) => {
-      const requestValidity = this.validateRequest(false, req.body);
+      const requestValidity = this.validateRequest(req.body);
+
       if (requestValidity.error)
         return res.status(404).send(requestValidity.error.message);
 
       const userId: string = req.params.id;
+
+      let saltedPassword;
+      if (req.body.password) {
+        saltedPassword = await this.saltPassword(req.body.password);
+      }
+
       const user: User[] = await this.users.findByIdAndUpdate(
         userId,
         {
           name: req.body.name,
-          email: requestValidity.value.email,
+          email: req.body.email,
+          password: saltedPassword,
           isManagement: req.body.isManagement,
         },
         { new: true }
@@ -85,12 +94,12 @@ export class UsersRoute {
     return await bcrypt.hash(password, salt);
   }
 
-  private validateRequest(create: boolean, request: any) {
+  private validateRequest(request: any) {
     const schema = Joi.object({
       name: Joi.string().min(5).max(255).required(),
       email: Joi.string().min(5).max(320).required().email().lowercase(),
       isManagement: Joi.bool().optional(),
-      password: create ? Joi.string().min(5).max(255) : Joi.forbidden(),
+      password: Joi.string().min(5).max(255),
     });
     return schema.validate(request, { convert: true });
   }
