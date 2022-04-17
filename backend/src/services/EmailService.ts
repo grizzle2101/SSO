@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import fs from "fs";
 import mjml2html from "mjml";
+import { compile } from "handlebars";
 
 export class EmailService {
   private emailAccount = process.env.EMAIL_ACCOUNT;
@@ -16,14 +17,20 @@ export class EmailService {
       "@smtp.gmail.com:465"
   );
 
+  compileTemplate(name: string) {
+    const template = compile(this.accountTemplate);
+    const mjml = template({ user: name });
+    return mjml2html(mjml);
+  }
+
   async sendEmail(recipient: string, subject: string, message: string) {
-    const template = mjml2html(this.accountTemplate);
+    let complied = this.compileTemplate("Conor");
 
     var mailOptions = {
       from: this.emailAccount,
       to: recipient,
       subject: subject,
-      html: template.html,
+      html: complied.html,
     };
 
     return await this.smtpTransport.sendMail(mailOptions);
