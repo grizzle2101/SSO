@@ -6,7 +6,7 @@ import { EmailService } from "../services/EmailService";
 import jwt from "jsonwebtoken";
 
 export class PasswordResetRoute {
-  public path = "/api/public/password-reset";
+  public path = "/api/password-reset";
   public completePasswordReset = "/api/password-reset/complete-change";
   public router = Router();
   public users = userModel;
@@ -49,13 +49,15 @@ export class PasswordResetRoute {
     return await bcrypt.hash(password, salt);
   }
 
+  //todo - cleanup, to use existing user & token models.
   private validateRequest(request: any) {
     const schema = Joi.object({
+      _id: Joi.string().min(5).max(255).required(),
       name: Joi.string().min(5).max(255).required(),
       email: Joi.string().min(5).max(320).required().email().lowercase(),
       isManagement: Joi.bool().optional(),
       password: Joi.string().min(5).max(255),
     });
-    return schema.validate(request, { convert: true });
+    return schema.validate(request);
   }
 }

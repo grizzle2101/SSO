@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { UsersService } from '../../services/users.service';
+import { PasswordResetService } from 'src/app/services/password-reset.service';
+import { TokenService } from 'src/app/services/token.service';
+import { User, UsersService } from '../../services/users.service';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 
 @Component({
@@ -9,10 +11,18 @@ import { UserDialogComponent } from '../user-dialog/user-dialog.component';
   styleUrls: ['./user-management-panel.component.scss'],
 })
 export class UserManagementPanelComponent {
-  users: any[] = [];
+  users: User[] = [];
   errorText: String = '';
+  token: any;
 
-  constructor(private usersServive: UsersService, private dialog: MatDialog) {
+  constructor(
+    private usersServive: UsersService,
+    private dialog: MatDialog,
+    private tokenService: TokenService,
+    private passwordResetService: PasswordResetService
+  ) {
+    this.token = this.tokenService.getRawToken();
+
     this.usersServive.getUsers().subscribe((users) => {
       this.users = users;
     });
@@ -55,12 +65,13 @@ export class UserManagementPanelComponent {
   }
 
   resetPassword(user: any) {
-    user.password = '';
-    this.usersServive
-      .editUser(user._id, user.password)
-      .subscribe((editedUser) => {
-        user.user.password = editedUser.password;
-      });
+    //todo - fix User type, dont want DB fields.
+    delete user['__v'];
+
+    this.passwordResetService.managementResetPassword(user).subscribe((x) => {
+      //todo - add toaster message to show action completed
+      console.log('result - ', x);
+    });
   }
 
   deleteUser(user: any) {
