@@ -36,6 +36,9 @@ export class PasswordResetComponent implements OnInit {
     -send updated password & RESET collection to backend.
     -close page, make sure cannot be reloaded. (replace with banner saying success, or expired if they reload.)
      */
+
+    this.tokenId = this.routingService.getToken();
+    this.isLoading = false;
   }
 
   cancel() {

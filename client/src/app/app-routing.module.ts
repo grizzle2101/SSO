@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'management/login', component: LoginComponent },
   { path: 'management/create-my-account', component: MyAccountComponent },
   { path: 'management/edit-my-account', component: MyAccountComponent },
-  { path: 'password-reset/:id', component: PasswordResetComponent },
+  { path: 'password-reset', component: PasswordResetComponent },
   {
     path: 'user-management',
     component: UserManagementPanelComponent,
