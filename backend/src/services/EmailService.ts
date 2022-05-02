@@ -26,7 +26,7 @@ export class EmailService {
   }
 
   generateLink(token: any) {
-    return `${this.applicationURL}/password-reset/${token}`;
+    return `${this.applicationURL}/password-reset/?token=${token}`;
   }
 
   async sendPasswordResetEmail(user: User, token: any) {
