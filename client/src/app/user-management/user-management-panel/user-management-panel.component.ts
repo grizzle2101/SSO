@@ -65,11 +65,8 @@ export class UserManagementPanelComponent {
   }
 
   resetPassword(user: any) {
-    //todo - fix User type, dont want DB fields.
-    delete user['__v'];
-
-    this.passwordResetService.emailPasswordReset(user).subscribe((x) => {
-      console.log('sending recoery mail - ', x);
+    this.passwordResetService.emailPasswordReset(user._id).subscribe((x) => {
+      console.log('sending recovery mail - ', user._id);
     });
   }
 

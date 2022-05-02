@@ -12,13 +12,16 @@ export class PasswordResetService {
 
   private passwordResetUrl = environment.apiEndpoint + '/password-reset';
   private passwordChangeUrl =
-    environment.apiEndpoint + '/api/password-reset/complete-change';
+    environment.apiEndpoint + '/password-reset/complete-change';
 
-  emailPasswordReset(user: User): Observable<any> {
-    return this.http.post(this.passwordResetUrl, user);
+  emailPasswordReset(_id: any): Observable<any> {
+    return this.http.post(this.passwordResetUrl, { _id });
   }
 
-  updatePassword(token: any, user: User): Observable<any> {
-    return this.http.post(this.passwordChangeUrl, user);
+  updatePassword(_id: any, password: string): Observable<any> {
+    return this.http.post(this.passwordChangeUrl, {
+      _id,
+      password,
+    });
   }
 }

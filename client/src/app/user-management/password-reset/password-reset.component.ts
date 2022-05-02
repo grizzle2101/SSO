@@ -46,14 +46,14 @@ export class PasswordResetComponent implements OnInit {
     this.tokenService.removeToken();
   }
 
-  createOrUpdate() {
+  updatePassword() {
     let passwordControl = this.accountForm.get('password');
 
     if (passwordControl?.dirty) {
       this.passwordResetService
-        .updatePassword(this.token, { password: passwordControl.value })
+        .updatePassword(this.user._id, passwordControl.value)
         .subscribe((updatedUser) => {
-          console.log('updated - ', updatedUser);
+          console.log('password updated.');
         });
     }
   }
