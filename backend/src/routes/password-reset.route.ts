@@ -18,7 +18,6 @@ export class PasswordResetRoute {
   }
 
   private initializeRoutes() {
-    //Task 1 - Create Email with Link & Token.
     this.router.post(this.path, async (req, res) => {
       const requestValidity = this.validateRequest(req.body);
 
@@ -34,9 +33,6 @@ export class PasswordResetRoute {
 
       res.send(result);
     });
-
-    //Task 2 - Create UI Component to Allow the Password Reset.
-    //Task 3 - Update the User account here as normal
 
     //note - look at securing these endpoints, only users with valid token should be allowed complete this.
     this.router.post(this.completePasswordReset, async (req, res) => {

@@ -10,13 +10,15 @@ import { User } from './users.service';
 export class PasswordResetService {
   constructor(private http: HttpClient) {}
 
-  private url = environment.apiEndpoint + '/password-reset';
+  private passwordResetUrl = environment.apiEndpoint + '/password-reset';
+  private passwordChangeUrl =
+    environment.apiEndpoint + '/api/password-reset/complete-change';
 
-  resetOwnPassword(user: User): Observable<any> {
-    return this.http.post(this.url, user);
+  emailPasswordReset(user: User): Observable<any> {
+    return this.http.post(this.passwordResetUrl, user);
   }
 
-  managementResetPassword(user: User): Observable<any> {
-    return this.http.post(this.url, user);
+  updatePassword(token: any, user: User): Observable<any> {
+    return this.http.post(this.passwordChangeUrl, user);
   }
 }

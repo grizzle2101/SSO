@@ -68,9 +68,8 @@ export class UserManagementPanelComponent {
     //todo - fix User type, dont want DB fields.
     delete user['__v'];
 
-    this.passwordResetService.managementResetPassword(user).subscribe((x) => {
-      //todo - add toaster message to show action completed
-      console.log('result - ', x);
+    this.passwordResetService.emailPasswordReset(user).subscribe((x) => {
+      console.log('sending recoery mail - ', x);
     });
   }
 
