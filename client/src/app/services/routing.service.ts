@@ -38,7 +38,7 @@ export class RoutingService {
     return this.router.url.includes(searchTerm);
   }
 
-  getToken(): string {
+  getTokenFromUrl(): string {
     return this.route.snapshot.queryParams['token'];
   }
 }

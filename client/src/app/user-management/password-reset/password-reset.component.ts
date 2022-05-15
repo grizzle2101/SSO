@@ -32,8 +32,12 @@ export class PasswordResetComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let rawToken = this.routingService.getToken();
+    //remove if already logged in.
+    this.tokenService.removeToken();
+
+    let rawToken = this.routingService.getTokenFromUrl();
     this.token = this.tokenService.decodeToken(rawToken);
+    this.isManagement = this.token.user.isManagement;
 
     this.userService.getUser(this.token.user._id).subscribe((user) => {
       this.user = user;
@@ -50,10 +54,12 @@ export class PasswordResetComponent implements OnInit {
     let passwordControl = this.accountForm.get('password');
 
     if (passwordControl?.dirty) {
+      this.isLoading = true;
       this.passwordResetService
         .updatePassword(this.user._id, passwordControl.value)
         .subscribe((updatedUser) => {
-          console.log('password updated.');
+          this.isLoading = false;
+          this.routingService.navigateToLogin(this.isManagement);
         });
     }
   }

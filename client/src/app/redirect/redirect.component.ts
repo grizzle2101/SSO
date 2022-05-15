@@ -9,7 +9,7 @@ export class RedirectComponent implements OnInit {
   constructor(private routingService: RoutingService) {}
 
   ngOnInit() {
-    const token = this.routingService.getToken();
+    const token = this.routingService.getTokenFromUrl();
     window.location.href = 'http://www.localhost.com/' + token;
   }
 }
