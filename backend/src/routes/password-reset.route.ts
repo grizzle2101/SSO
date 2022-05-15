@@ -30,7 +30,7 @@ export class PasswordResetRoute {
 
       if (!user) res.status(400).send("User does not exist.");
 
-      const token = jwt.sign({ user }, this.privateKey);
+      const token = jwt.sign({ user, issued: new Date() }, this.privateKey);
       let result = await this.service.sendPasswordResetEmail(user, token);
 
       res.send(result);

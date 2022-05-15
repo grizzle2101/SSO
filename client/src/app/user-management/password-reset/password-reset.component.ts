@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import * as moment from 'moment';
 import { PasswordResetService } from 'src/app/services/password-reset.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { TokenService } from 'src/app/services/token.service';
 import { UsersService, User } from 'src/app/services/users.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-password-reset',
@@ -13,6 +15,7 @@ import { UsersService, User } from 'src/app/services/users.service';
 export class PasswordResetComponent implements OnInit {
   isLoading: boolean = true;
   isManagement: boolean = false;
+  isExpired: boolean = false;
   user!: User;
   token!: any;
 
@@ -38,6 +41,9 @@ export class PasswordResetComponent implements OnInit {
     let rawToken = this.routingService.getTokenFromUrl();
     this.token = this.tokenService.decodeToken(rawToken);
     this.isManagement = this.token.user.isManagement;
+
+    this.isExpired =
+      moment().diff(this.token.issued, 'minutes') > environment.tokenTimeout;
 
     this.userService.getUser(this.token.user._id).subscribe((user) => {
       this.user = user;
