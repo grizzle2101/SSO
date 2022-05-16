@@ -14,6 +14,7 @@ import { MaterialModule } from './modules/material/material.module';
 import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
 import { DialogErrorStateMatcherModule } from './helpers/dialogErrorStateMatcherModule';
 import { MyAccountComponent } from './user-management/my-account/my-account.component';
+import { PasswordResetComponent } from './user-management/password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MyAccountComponent } from './user-management/my-account/my-account.comp
     RedirectComponent,
     DashboardComponent,
     MyAccountComponent,
+    PasswordResetComponent,
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { RedirectComponent } from './redirect/redirect.component';
 import { ManagementGuard } from './route-guards/management.guard';
 import { MyAccountComponent } from './user-management/my-account/my-account.component';
+import { PasswordResetComponent } from './user-management/password-reset/password-reset.component';
 import { UserManagementPanelComponent } from './user-management/user-management-panel/user-management-panel.component';
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'management/login', component: LoginComponent },
   { path: 'management/create-my-account', component: MyAccountComponent },
   { path: 'management/edit-my-account', component: MyAccountComponent },
+  { path: 'password-reset', component: PasswordResetComponent },
   {
     path: 'user-management',
     component: UserManagementPanelComponent,

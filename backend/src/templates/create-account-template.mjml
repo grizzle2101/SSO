@@ -1,0 +1,19 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-image width="100px" src="../assets/images/logo.svg"></mj-image>
+
+        <mj-divider border-color="#F45E43"></mj-divider>
+
+        <mj-text font-size="20px" color="#F45E43" font-family="helvetica"
+          >Hello {{user}}, a request had been made to change your SSO password.
+        </mj-text>
+        <mj-text font-size="20px" color="#F45E43" font-family="helvetica"
+          >Please click this link
+          <a href="{{ link }}">{{link }}</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

@@ -18,6 +18,10 @@ export class TokenService {
     this.isManagement = this.token?.user?.isManagement;
   }
 
+  getRawToken() {
+    return this.tokenHelper.getToken();
+  }
+
   loadToken() {
     let token = this.tokenHelper.getToken();
     this.token = this.tokenHelper.getDecodedToken(token);
