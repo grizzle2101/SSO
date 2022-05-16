@@ -1,5 +1,5 @@
 export interface ActiveReset {
-  _id?: String;
-  userId: String;
+  _id?: string;
+  userId: string;
   dateIssued: Date;
 }
