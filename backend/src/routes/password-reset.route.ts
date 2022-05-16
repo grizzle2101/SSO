@@ -5,12 +5,14 @@ import userModel from "../models/user.model";
 import { EmailService } from "../services/EmailService";
 import jwt from "jsonwebtoken";
 import { User } from "../interfaces/user.interface";
+import activeResetModel from "../models/active-reset.model";
 
 export class PasswordResetRoute {
   public path = "/api/password-reset";
   public completePasswordReset = "/api/password-reset/complete-change";
   public router = Router();
   public users = userModel;
+  public activeLogins = activeResetModel;
   private service = new EmailService();
   private privateKey = process.env.PRIVATE_KEY;
 
@@ -20,7 +22,6 @@ export class PasswordResetRoute {
 
   private initializeRoutes() {
     this.router.post(this.path, async (req, res) => {
-      console.log("BODY - ", req.body);
       const requestValidity = this.validateRequest(req.body);
 
       if (requestValidity.error)
@@ -30,24 +31,33 @@ export class PasswordResetRoute {
 
       if (!user) res.status(400).send("User does not exist.");
 
-      const token = jwt.sign({ user, issued: new Date() }, this.privateKey);
+      let currentDate = new Date();
+
+      await this.activeLogins.create({
+        userId: user._id,
+        dateIssued: currentDate,
+      });
+
+      const token = jwt.sign({ user, issued: currentDate }, this.privateKey);
       let result = await this.service.sendPasswordResetEmail(user, token);
 
       res.send(result);
     });
 
-    //note - look at securing these endpoints, only users with valid token should be allowed complete this.
     this.router.post(this.completePasswordReset, async (req, res) => {
-      console.log("req.body ", req.body);
-
       const requestValidity = this.validateRequest(req.body);
 
       if (requestValidity.error)
         return res.status(404).send(requestValidity.error.message);
 
-      console.log("requestValidity ", requestValidity);
-
       const userId: string = req.body._id;
+
+      //todo - roll into fawn transaction
+      //verify active password reset
+      let login = await this.activeLogins.findOne({ userId });
+      if (!login) return res.status(404).send("Pasword reset is expired.");
+      else login.delete();
+
       const saltedPassword = await this.saltPassword(req.body.password);
 
       const user: User[] = await this.users.findByIdAndUpdate(
