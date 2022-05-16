@@ -63,10 +63,17 @@ export class PasswordResetComponent implements OnInit {
       this.isLoading = true;
       this.passwordResetService
         .updatePassword(this.user._id, passwordControl.value)
-        .subscribe((updatedUser) => {
-          this.isLoading = false;
-          this.routingService.navigateToLogin(this.isManagement);
-        });
+        .subscribe(
+          (updatedUser) => {
+            this.isLoading = false;
+            this.routingService.navigateToLogin(this.isManagement);
+          },
+          (error) => {
+            console.log(error);
+            this.isExpired = true;
+            this.isLoading = false;
+          }
+        );
     }
   }
 }
